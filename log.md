@@ -90,3 +90,15 @@
 **确认无误：** 按键 A=G37 / B=G39（官方 Plus2 文档明确标注）。
 
 **StickC Plus2 现已零 TODO。** 教训：同系列迭代版不一定引脚一致，必须按具体型号的官方资料+原理图。
+
+## [2025-07-21] fix | Timer Camera F：据官方库源码+原理图厘清 BM8563 唤醒机制（IRQ 非 GPIO）
+
+- 读官方库 m5stack/TimerCam-arduino 源码 + 用户读原理图，厘清定时唤醒：
+  - timerSleep() → 设 BM8563 闹钟 → 拉低 POWER_HOLD(G33) 切主电 → ~2μA 近断电；到点 BM8563 ~INT(IRQ) 经网络 `RTC_ALM` **直接触发电源开关重新上电** → 冷启动。
+  - **结论：BM8563 IRQ 不接任何 ESP32 GPIO**（官方引脚图无 IRQ 行，与此一致）。
+  - 库核实：POWER_HOLD=G33、LED=G2、BAT_ADC=G38(ADC1_CH2)。
+  - 外部唤醒(ext_wakeup.ino)：保持 HOLD 进 deep sleep，ext0 唤醒脚=GPIO4（HY2.0-4P 的 SDA 线复用）。
+- BM8563 引脚接线（原理图）：pin3 ~INT→RTC_ALM、SDA→G12、SCL→G14、VDD→VBAT-IN。
+- 删除自造的"背面 U 形焊盘"（官方文档无此说法，系之前臆测，已订正）。
+- 新增 raw/datasheets/m5stack-timercam-f_library-power.txt（库源码摘录）。
+- 残留（均属归档类，非数据缺口）：原理图 PDF / OV3660 datasheet 待归档入 raw/；OV3660 SCCB 7 位地址(0x3C)待核实（esp32-camera 会自动探测）。

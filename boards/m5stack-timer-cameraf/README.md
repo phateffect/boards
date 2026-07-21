@@ -15,12 +15,13 @@ onboard_modules:
 date_added: 2025-07-21
 sources:
   - raw/datasheets/m5stack-timercam-f_pinmap.txt
+  - raw/datasheets/m5stack-timercam-f_library-power.txt
 tags: [board, esp32, m5stack, camera, low-power, combo]
 ---
 
 # M5Stack Timer Camera F
 
-> ESP32 超低功耗摄像头板：**ESP32-D0WDQ6-V3 + 8MB PSRAM**，板载 **OV3660**（3MP、120° 鱼眼）+ BM8563 RTC，靠 RTC 中断做"深睡+定时拍照"，待机电流可低至 ~2μA，内置 270mAh 电池可撑一个多月（每小时一拍）。
+> ESP32 超低功耗摄像头板:**ESP32-D0WDQ6-V3 + 8MB PSRAM**,板载 **OV3660**(3MP、120° 鱼眼)+ BM8563 RTC,靠 BM8563 定时闹钟做超低功耗定时拍照（IRQ 触发电源电路重新上电，非 GPIO 唤醒），待机电流可低至 ~2μA,内置 270mAh 电池可撑一个多月(每小时一拍)。
 
 > 📌 **核心板 + 模组组合体**：摄像头部分 = [OV3660 摄像头模组](../../modules/ov3660-camera/README.md)。本页只说明「这颗 OV3660 在本板上接到哪些 GPIO」（板级接线），**不重复 OV3660 的器件细节**——点过去看。
 
@@ -43,9 +44,9 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 | 板载模组 | 占用引脚 | 功能 | 说明 |
 |---|---|---|---|
 | **摄像头 OV3660** | 见下方「摄像头 DVP 接线」表 | DVP 并行摄像头 | 器件细节见 [OV3660 模组页](../../modules/ov3660-camera/README.md) |
-| RTC BM8563 | G12 SDA · G14 SCL | I2C | 暴露 IRQ 用于深睡唤醒（IRQ 具体 GPIO 待核实） |
+| RTC BM8563 | SDA=G12 · SCL=G14 · INT(pin3)→`RTC_ALM` | I2C | INT(IRQ)**不接 ESP32 GPIO**——直接进电源开关电路；定时到点经它重新上电（见「唤醒机制」） |
 | 状态 LED | G2 | GPIO 输出 | 指示灯 |
-| 电池检测/保持 | G38 BAT_ADC · G33 BAT_HOLD | ADC / 控制 | 内置 270mAh 锂电池 |
+| 电池检测/保持 | G38 BAT_ADC · G33 POWER_HOLD | ADC1_CH2 / 控制 | 库核实：开机须置 HOLD(G33)=1 维持供电，置 0 关机；内置 270mAh 锂电池 |
 | PWR 键 | —（电源管理） | 电源开关 | 长按 2s 开机；关机用软件 API 或板载 RESET 键 |
 | RESET 键 | EN/CHIP_PU | 复位 | 板载微动 |
 
@@ -82,10 +83,11 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 | 接口 | 网络 | 功能 | 备注 |
 |---|---|---|---|
 | HY2.0-4P · SCL | G13 | I2C 时钟 | 底部 4P 接口（Grove-like，I2C） |
-| HY2.0-4P · SDA | G4 | I2C 数据 | — |
+| HY2.0-4P · SDA | G4 | I2C 数据 | 也可作**外部唤醒源**（ext0 deep-sleep，见「唤醒机制」） |
 | HY2.0-4P · 5V | 5V | 电源 | — |
 | HY2.0-4P · GND | GND | 地 | — |
-| (背面 U 形焊盘) | ? | TODO | 官方图未细列，待原理图复核 |
+
+> 底部 HY2.0-4P 是本板**唯一**对外扩展口(官方文档未提及其他扩展焊盘)。
 
 ## 引脚物理排布
 
@@ -105,7 +107,10 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 
 ## 原理图
 
-- [官方 TimerCamera-F 原理图 PDF（M5 官网）](https://docs.m5stack.com/en/unit/timercam_f) — TODO：下载到 `raw/schematics/m5stack-timercam-f.pdf`
+- [官方 TimerCamera-F 原理图（M5 官网页）](https://docs.m5stack.com/en/unit/timercam_f)（Schematics PDF 1/2）
+- BM8563 接线已据原理图核实；TODO：把原理图 PDF 归档到 `raw/schematics/`。
+
+**BM8563 引脚（原理图）：** pin1 OSCI→GND · pin2 OSCO→GND · **pin3 ~INT→`RTC_ALM`（电源开关电路）** · pin4 VSS→GND · pin5 SDA→GPIO12 · pin6 SCL→GPIO14 · pin7 CLKOUT→NC · pin8 VDD→VBAT-IN
 
 ## 示例代码
 
@@ -114,8 +119,11 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 
 ## 特殊说明
 
-- **电源/低功耗**：PWR 键长按 2s 开机；接外部电源时设备保持开机。关机需软件 API 或按板载 RESET。深睡靠 BM8563 RTC 中断唤醒，待机 ~2μA。
-- **欠压保护**：电压不足时摄像头可能触发欠压复位。可在 Arduino 初始化时禁用 brownout（见官方示例 `WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0)`）。
+- **电源/开机**：PWR 键长按 2s 开机；接外部电源时设备保持开机。开机后程序须置 **POWER_HOLD(G33)=1** 维持供电（库 `Power.begin()` 自动做）；关机：软件置 HOLD=0、或按板载 RESET、或 `Power.powerOff()`。
+- **两种唤醒机制**（关键）：
+  1. **定时唤醒**（`Power.timerSleep(s)` / 官方 `wakeup.ino`）：设 BM8563 闹钟 → 拉低 HOLD(G33) 切主电 → 整机近乎断电（**~2μA**）。到点 BM8563 报警，**IRQ(~INT) 经 `RTC_ALM` 网络直接触发电源开关重新上电** → ESP32 冷启动。**注意：IRQ 不接任何 ESP32 GPIO**，这里不是 GPIO 唤醒。
+  2. **外部唤醒**（官方 `ext_wakeup.ino`）：保持 HOLD（`gpio_hold_en`）进 deep sleep，用 **ext0 唤醒脚 = GPIO4**（即底部 HY2.0-4P 的 SDA 线复用，外部拉高唤醒）。电流高于方案 1。
+- **欠压保护**：电压不足时摄像头可能触发欠压复位。可在 Arduino 初始化时禁用 brownout（`WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0)`）。
 - **USB 驱动**：部分系统需手装 FTDI VCP 驱动；未识别设备名常为 "M5Stack" / "USB Serial"。
 - **组合体原则**：OV3660 细节不在本页展开，统一引用 [OV3660 模组页](../../modules/ov3660-camera/README.md)。
 
@@ -126,6 +134,8 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 
 ## 参考来源
 
-- `raw/datasheets/m5stack-timercam-f_pinmap.txt`（官方 TimerCam-F 页面文本快照，2025-07-21 抓取）
-- 官方文档：<https://docs.m5stack.com/en/unit/timercam_f>
-- TODO：官方原理图 PDF、引脚图、OV3660 datasheet（存入 `raw/`）
+- `raw/datasheets/m5stack-timercam-f_pinmap.txt`（官方 TimerCam-F 页面文本快照，2025-07-21）
+- `raw/datasheets/m5stack-timercam-f_library-power.txt`（官方库 Power_Class / 唤醒示例摘录，2025-07-21；据此核实 HOLD=G33 / LED=G2 / BAT_ADC=G38 / 唤醒机制）
+- BM8563 引脚接线：据官方原理图（用户提供，2025-07-21）
+- 官方文档：<https://docs.m5stack.com/en/unit/timercam_f> · 库：<https://github.com/m5stack/TimerCam-arduino>
+- TODO：把官方原理图 PDF、OV3660 datasheet 归档到 `raw/`

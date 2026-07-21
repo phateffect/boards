@@ -1,0 +1,42 @@
+# 原始资料：官方 TimerCam-arduino 库源码摘录（电源/唤醒/RTC）
+# 来源：https://github.com/m5stack/TimerCam-arduino （默认分支 master）
+# 文件：src/utility/Power_Class.h / .cpp , examples/wakeup/wakeup.ino , examples/ext_wakeup/ext_wakeup.ino
+# 抓取：2025-07-21
+# 用途：核实 TimerCam F 的电源保持脚、LED 脚、电池 ADC 脚，以及 BM8563 唤醒机制。
+
+[Power_Class.h 关键宏]
+#define POWER_HOLD_PIN 33      // 电源保持（开机后须置 HIGH 维持供电）
+#define POWER_LED_PIN  2       // 板载状态 LED
+#define BAT_ADC_PIN     38     // 电池电压检测
+#define BAT_ADC_CHANNEL ADC1_CHANNEL_2   // = GPIO38 对应 ADC1_CH2
+
+[Power_Class.cpp — 电源/唤醒逻辑]
+void Power_Class::begin() {
+    pinMode(POWER_HOLD_PIN, OUTPUT);
+    digitalWrite(POWER_HOLD_PIN, HIGH);   // 开机即拉高保持供电
+    ... (ADC 初始化、LEDC 给 LED 配 PWM) ...
+}
+void Power_Class::powerOff() {
+    digitalWrite(POWER_HOLD_PIN, LOW);    // 释放 HOLD → 主电源被切断
+    esp_deep_sleep_start();
+}
+void Power_Class::timerSleep(int seconds) {
+    TimerCAM.Rtc.disableIRQ();
+    TimerCAM.Rtc.setAlarmIRQ(seconds);   // 设 BM8563 定时闹钟
+    powerOff();                          // 拉低 HOLD + 关机
+}
+
+[结论：BM8563 IRQ 不接 ESP32 GPIO]
+timerSleep 流程是：设 RTC 闹钟 → 拉低 HOLD(G33) 切主电 → 整机近乎断电(≈2μA)。
+到点 BM8563 报警，IRQ 信号【直接进电源开关电路】重新上电 → ESP32 冷启动。
+所以 BM8563 的 IRQ **不是任何 ESP32 GPIO**（官方引脚图里也没有 IRQ 行，与此一致）。
+
+[两种唤醒机制]
+1) 定时唤醒(timerSleep / examples/wakeup.ino)：全断电(~2μA)，靠 BM8563 闹钟 IRQ→电源电路重新上电。
+2) 外部唤醒(examples/ext_wakeup.ino)：保持 HOLD(经 gpio_hold_en)，进 deep sleep，
+   用 ext0 唤醒脚 = GPIO4（即底部 HY2.0-4P 的 SDA 线复用）。
+   例：esp_sleep_enable_ext0_wakeup(GPIO_NUM_4, 1)。
+
+[备注]
+- 官方文档(https://docs.m5stack.com/en/unit/timercam_f)只提到底部 HY2.0-4P、复位键、LED；
+  未提及任何"背面 U 形焊盘/额外扩展点"——该说法应删除（无依据）。
