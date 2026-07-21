@@ -70,3 +70,23 @@
 
 - 用户确认原理图上 QMI8658C pin1(SA0) 接 **GND** → 7 位 I2C 地址 = **0x6A**（定稿，去掉 hedge）。
 - 至此 Waveshare ESP32-S3-Matrix 全部引脚/地址 TODO 清零；仅剩"原理图 PDF 本地归档已完成"。
+
+## [2025-07-21] fix | M5StickC Plus2：据官方 Plus2 文档+原理图 v0.5 全面更正（原误用 Plus 资料）
+
+**背景**：原页面误用 StickC **Plus** 文档当 Plus2（以为二者引脚一致）。用户指出官方 Plus2 页面（路径含空格 M5StickC%20PLUS2）后，抓取权威资料 + 本地原理图，发现多处实质错误，已全面更正。
+
+**关键修正（错→对）：**
+- 主控：ESP32-PICO-D4 → **ESP32-PICO-V3-02**；Flash 4MB → **8MB**；**新增 2MB PSRAM**。
+- 电源：AXP192 → **移除 AXP192**（PMIC 没了）；改用 SY8089(3V3)+SY7088(5V)+TP4057(充电)+BM8563(RTC)。
+- 红色 LED：G10 → **G19（与 IR 发射管共用同一脚）**；另有绿色 LED（不可编程，睡眠指示）。
+- IR：G9 → **G19**。
+- TFT DC：G23 → **G14**；RST：G18 → **G12**；背光：经 AXP192 → **G27(GPIO)**。
+- 新增按键 C(WAKE)=**G35**、HOLD=**G4**（开机后须置1）、电池电压检测=**G38(ADC)**。
+- 电池：~200mAh(待核实) → **200mAh@3.7V 定稿**；USB-UART：**CH9102**（CP34X 驱动）。
+- 删除误用的 m5stickc-plus_pinmap.txt（Plus 资料），新建权威 m5stickc-plus2_pinmap.txt。
+- 示例 blink_led：LED_PIN 10 → **19**；platformio.ini 用官方 m5stack-stickc-plus2 board + 8MB/PSRAM + M5Unified。
+- 原理图 PDF 已入库 raw/schematics/m5stack-stickc-plus2.pdf，交叉印证（CH9102F/无AXP/G37G39按键/mic G0G34/MPU6886@0x68）。
+
+**确认无误：** 按键 A=G37 / B=G39（官方 Plus2 文档明确标注）。
+
+**StickC Plus2 现已零 TODO。** 教训：同系列迭代版不一定引脚一致，必须按具体型号的官方资料+原理图。

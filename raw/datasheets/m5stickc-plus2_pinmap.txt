@@ -1,0 +1,72 @@
+# 原始资料：官方 M5StickC PLUS2 文档（verbatim 抓取）
+# 来源：https://docs.m5stack.com/en/core/M5StickC%20PLUS2 （SKU K016-P2）
+# 抓取：2025-07-21 via curl
+# 注：这是 Plus2 的权威资料，与 Plus 有多处不同（芯片/电源/LED/IR/TFT DC/RST 等）。
+#     另有本地原理图 raw/schematics/m5stack-stickc-plus2.pdf（v0.5）可交叉核对。
+
+[Description]
+StickC-Plus2 是 StickC-Plus 的迭代版。主控 ESP32-PICO-V3-02，Wi-Fi。
+板载：IR 发射、RTC、麦克风、LED、IMU、按键、蜂鸣器；1.14" ST7789V2，135×240。
+电池升至 200mAh，接口兼容 HAT 和 Unit 系列。
+
+[Specifications]
+SoC: ESP32-PICO-V3-02 @ 双核, up to 240MHz
+Microphone: SPM1423
+Button: Custom Button x 3
+LED: Green LED x1 (Non-programmable, Sleep State Indicator)
+     Red LED x1 (Shared control pin G19 with IR emitter tube)
+RTC: BM8563
+Buzzer: Onboard
+IMU: MPU6886
+Battery: 200mAh @ 3.7V, inside
+Memory: 2 MB PSRAM + 8 MB Flash
+USB-UART Chip: CH9102
+
+[PinMap — Plus2]
+Red LED & IR Emitter / Button A / Button B / Buzzer:
+  ESP32-PICO-V3-02 | G19 | G37 | G39 | G35 | G2
+  IR Emitter & Red LED | (G19) IR emitter & Red LED pin
+  Button A  | (G37)
+  Button B  | (G39)
+  Button C  | (G35)
+  Passive Buzzer | (G2)
+
+Color TFT Display (ST7789V2, 135×240):
+  ESP32-PICO-V3-02 | G15 | G13 | G14 | G12 | G5 | G27
+  TFT Display | MOSI | CLK | DC | RST | CS | BL
+
+Microphone SPM1423:
+  ESP32-PICO-V3-02 | G0 | G34
+  MIC | CLK | DATA
+
+6-Axis IMU (MPU6886) & RTC BM8563 (& IR/Red LED TX):
+  ESP32-PICO-V3-02 | G22 | G21 | G19
+  IMU MPU6886 | SCL | SDA |
+  BM8563     | SCL | SDA |
+  IR Emitter |     |     | TX
+  Red LED    |     |     | TX
+
+HY2.0-4P (PORT.CUSTOM):
+  PORT.CUSTOM | GND | 5V | G32 | G33
+
+[Power On/Off] (无 AXP192，靠 HOLD=G4 + BM8563 RTC IRQ)
+- 开机：按 "BUTTON C" >2s，或经 RTC IRQ 唤醒。唤醒后程序须置 HOLD(G4)=1 保持供电，否则会再次关机。
+- 关机(无 USB)：按 "BUTTON C" >6s，或程序置 HOLD(GPIO4)=0。
+- 接 USB 时按 BUTTON C >6s：关屏进入睡眠(非完全关机)。
+
+[Pin Differences — PLUS vs PLUS2]
+  IR:        PLUS G9   | PLUS2 G19
+  LED(red):  PLUS G10  | PLUS2 G19 (与 IR 共用)
+  TFT DC:    PLUS G23  | PLUS2 G14
+  TFT RST:   PLUS G18  | PLUS2 G12
+  TFT CS:    PLUS G5   | PLUS2 G5
+  TFT MOSI:  G15 / CLK: G13 (相同)
+  BTN A:     G37 (相同)   BTN B: G39 (相同)
+  BTN C:     PLUS 普通按键 | PLUS2 G35 (WAKE)
+  HOLD:      PLUS 无      | PLUS2 G4
+  Batt V Detect: PLUS 经 AXP192 | PLUS2 G38
+
+[Hardware Differences]
+  PLUS : ESP32-PICO-D4 | AXP192 | 120mAh | 520KB SRAM+4MB Flash | CH522 | 红橙
+  PLUS2: ESP32-PICO-V3-02 | 无(去掉AXP192) | 200mAh | 2MB PSRAM+8MB Flash | CH9102 | 橙
+  变更记录 2023.12: Removed AXP192；主控 ESP32-PICO-D4→V3-02；开关机方式不同。

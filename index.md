@@ -6,7 +6,7 @@
 
 | Slug | 名称 | 厂商 | 主控 | 板载模组 | 组合体? | 页面 |
 |---|---|---|---|---|---|---|
-| m5stack-stickc-plus2 | M5StickC Plus2 | M5Stack | ESP32-PICO-D4 | LCD/IMU/RTC/MIC/IR/蜂鸣器 | 否 | [→](boards/m5stack-stickc-plus2/README.md) |
+| m5stack-stickc-plus2 | M5StickC Plus2 | M5Stack | ESP32-PICO-V3-02 | LCD/IMU/RTC/MIC/IR+LED/蜂鸣器（无PMIC） | 否 | [→](boards/m5stack-stickc-plus2/README.md) |
 | waveshare-esp32-s3-matrix | ESP32-S3-Matrix | Waveshare | ESP32-S3 | 8×8 WS2812 矩阵 | 否 | [→](boards/waveshare-esp32-s3-matrix/README.md) |
 | m5stack-timer-cameraf | Timer Camera F | M5Stack | ESP32-D0WDQ6-V3 | OV3660 摄像头/RTC/LED | **是（+OV3660）** | [→](boards/m5stack-timer-cameraf/README.md) |
 
