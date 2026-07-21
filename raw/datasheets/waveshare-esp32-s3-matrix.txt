@@ -1,0 +1,407 @@
+# 原始资料快照（verbatim，勿改）
+# 来源: https://www.waveshare.com/wiki/ESP32-S3-Matrix
+# 抓取: 2025-07-21  via curl (官方文档页面文本)
+# 说明: 这是官方文档页面的 HTML→text 抽取快照，作为引脚/规格引用的事实源。建议后续补官方原理图 PDF 与引脚图到本目录。
+
+ 
+ ESP32-S3-Matrix - Waveshare Wiki 
+ Navigation menu 
+ Toggle navigation 
+ Raspberry Pi Boards/Kits Displays Cameras Expansions All-in-one Robots Portable Gaming Accessories Other Android/Linux Boards AI Boards/Kits Displays Cameras Expansions Robots Displays LCD/OLED e-Paper IoT Long Range Wireless Short Range Wireless Wired Comm / Converter Cameras / Audio / Video Sensors Motors / Servos others Robotics Mobile Robots Dog-like Robots Drivers / Sensors Robot Arm / Control MCU/FPGA Arduino micro:bit STM32 FPGA Support 
+ ESP32-S3-Matrix 
+ From Waveshare Wiki 
+ Jump to: navigation , search 
+|
+|
+|
+|ESP32-S3-Matrix
+|
+|ESP32-S3, USB Type-C
+|
+|{{{name2}}}
+|
+|
+|
+|{{{name3}}}
+|
+|
+|
+|{{{name4}}}
+|
+|
+|
+|{{{name5}}}
+|
+|
+|
+|{{{name6}}}
+|
+|
+|
+|
+|
+|Primary Attribute
+|
+|
+|
+|Category:
+|
+|{{{userDefinedInfo}}}:
+|{{{userdefinedvalue}}}
+|
+|Brand: Waveshare
+|
+|
+|
+|Website
+|
+|
+|
+|International: Website
+|
+|Chinese: 官网
+|
+|
+|
+|Onboard Interfaces
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|Related Products
+|
+|
+|
+|
+ Contents 
+ 1 Overview 
+ 1.1 Introduction 
+ 1.2 Features 
+ 1.3 Function Block 
+ 1.4 Pinout Definition 
+ 1.5 Dimensions 
+ 2 Working with ESP-IDF 
+ 2.1 Develop with VSCode Plug-in 
+ 2.1.1 Install VSCode 
+ 2.2 Install Espressif IDF Plug-in 
+ 2.3 Official Demo Usage GUIDE 
+ 2.3.1 Create Demo 
+ 2.3.2 Modify COM Port 
+ 2.3.3 Modify the Driver Object 
+ 2.3.4 The Rest of the Status Bar 
+ 2.3.5 Compile, Program, Serial Port Monitoring 
+ 2.4 Erase Device Flash 
+ 3 Working with Arduino 
+ 3.1 Environment Set-up 
+ 3.1.1 If the installation fails 
+ 3.2 Run Example 
+ 3.2.1 Create Example 
+ 3.2.2 Upload Demo 
+ 4 Use in Micropython 
+ 4.1 Flash Firmware Demo 
+ 4.2 Preparation 
+ 4.2.1 Thonny 
+ 5 Examples 
+ 5.1 Library Installation 
+ 5.2 Display Characters 
+ 5.3 Dynamic Game 
+ 5.4 RGB Color 
+ 5.5 Web Page Control 
+ 6 Resources 
+ 6.1 Demo 
+ 6.2 Application Example 
+ 6.3 3D Model 
+ 6.4 Software 
+ 6.4.1 Programming Software 
+ 6.4.2 UART 
+ 6.4.3 Flash 
+ 6.4.4 Bluetooth 
+ 6.5 Schematic 
+ 6.6 ESP32-S3 Datasheet 
+ 6.7 Official ESP32 Documentation 
+ 6.8 Project Resources 
+ 7 FAQ 
+ 8 Support 
+ Overview 
+ Introduction 
+ ESP32-S3-Matrix is a compact microcontroller development board with multiple digital interfaces, such as 20x GPIO pin headers, and onboard 8*8 RGB LED matrix, which can be used for displaying cool RGB LED effects or simple images. 
+In terms of hardware, it adopts ESP32-S3 as the main chip, integrates high-performance Xtensa® 32-bit LX7 dual-core processor, low-power co-processor, WiFi, Bluetooth, RF module, and other peripheral interfaces, enabling it to be compatible with other devices, and is easy to use. 
+In terms of software, you can choose the ESP-IDF development environment or develop on the Arduino IDE, and you can easily get started with it and apply it to your projects.
+ Features 
+ Adopts ESP32-S3 chip, integrates high-performance Xtensa® 32-bit LX7 dual-core processor, the main frequency is up to 240MHz. 
+ Integrates 512KB SRAM, 384KB ROM, 16KB RTC SRAM, and 4MB Flash memory storage. 
+ Integrates low energy Bluetooth(Bluetooth LE) wireless communication, 2.4GHZ WiFi, and superior RF performance. 
+ USB Type-C connector, easier to use. 
+ Adapting multiple peripheral interfaces, onboard 8*8 beads matrix of 64 RGB beads, for displaying cool RGB LED effects or simple images. 
+ Support multiple low-power working effects, balancing the communication distance, data rate, and power consumption, meeting various application requirements. 
+ Please note that the LED brightness should not be set too high, it will cause a rapid temperature increase, which can result in damage to the board. 
+ Function Block 
+ Pinout Definition 
+ Dimensions 
+ Working with ESP-IDF 
+ The following development system is Windows by default, and it is recommended to use the VSCode plug-in for development. 
+ Develop with VSCode Plug-in 
+ Install VSCode 
+ 1. Open the download page of the official VSCode website, and select the corresponding system and system bit to download. 
+ 2. After running the installation package, the rest can be installed by default, but here for the subsequent experience, it is recommended to check boxes 1, 2, and 3.
+ After the first two items are enabled, you can open VSCode directly by right-clicking files or directories, which can improve the subsequent user experience. 
+ After the third item is enabled, you can select VSCode directly when you choose how to open it. 
+ Install Espressif IDF Plug-in 
+ Note: Currently the latest version of the plugin is V1.6.4, users can choose the same version as us for a consistent experience! 
+ Open VSCode, use Shift+Ctrl+X to enter the plug-in manager. 
+ In the search bar, enter Espressif IDF to select the corresponding plug-in and click "Install". 
+ Press F1 to input: 
+ esp-idf: configure esp-idf extension 
+ Select express (This tutorial is intended for first-time installation users, so only the first general installation tutorial is covered). 
+ Select download sever. 
+ Select the version of ESP-IDF you want to use now, we choose the latest V5.1.1. 
+ The following two are the installation paths respectively for the ESP-IDF container directory and the ESP-IDF Tools directory. 
+ Note: If you have installed ESP-IDF before, or failed to do so, please be sure to delete the file completely or create a new path without Chinese. 
+ After configuring, click "Install" to download: 
+ Enter the download interface, and then it will automatically install the corresponding tools and environment, just wait for a second. 
+ After the installation is complete, you will enter the following interface, indicating that the installation is finished. 
+ Official Demo Usage GUIDE 
+ Create Demo 
+ Press F1 to enter: 
+ esp-idf:show examples projects
+ Select your current IDF version: 
+ Take the Hello World demo as an example:
+ ①Select the corresponding demo. 
+ ②Its readme will state what chip the demo applies to (how the demo is used and the file structure are described below, omitted here). 
+ ③Click to create the demo. 
+Select the path to place the demo, no folder with the same name as the demo is required: 
+ Modify COM Port 
+ The corresponding COM ports are shown here, click to modify them. 
+ Please select the COM ports according to your device. (You can view it from the device manager.) 
+ In case of a download failure, please press the reset button for more than 1 second or enter download mode, and wait for the PC to recognize the device again before downloading once more. 
+ Select the project or demo to use: 
+ Then we finish the modification of the COM ports. 
+ Modify the Driver Object 
+ The driver object is displayed here, and you can modify it by clicking on it. 
+ Select the project or demo to use. 
+ Wait for a minute after clicking. 
+ Select the object we need to drive, which is our main chip, ESP32S3. 
+ Choose the path to openocd, it doesn't affect us here, so let's just choose one at random. 
+ The Rest of the Status Bar 
+ ①SDK configuration editor, supports modifying many features and configurations of ESP-IDF. 
+ ②All cleanup, and clear all compiled files. 
+ ③Compile. 
+ ④Current download mode, default is UART. 
+ ⑤Flash the current firmware, please do it after compiling. 
+ ⑥Open the serial port monitor, used to view the serial port information. 
+ ⑦Compile, flash, open the serial monitor all-in-one button, (most commonly used for debugging). 
+ Compile, Program, Serial Port Monitoring 
+ Click on the all-in-one button we described before to compile, flash, and open the serial port monitor. 
+ It may take a long time to compile especially for the first time. 
+ During this process, the ESP-IDF may take up a lot of CPU resources, so it may cause the system to lag. 
+ If it is the first time to flash the program for a new project, you will need to select the download method, and select UART . 
+ This can also be changed later in the Download Methods section (click on it to bring up the options). 
+ As it comes with the onboard automatic download circuit, there is no need for manual operation to download automatically. 
+ After successful download, automatically enter the serial monitor, you can see the chip output the corresponding information and be prompted to restart after 10S. 
+ Erase Device Flash 
+ Unpack the software resource package ( Flash debugging software ). 
+ Open flash_download_tool_3.9.5.exe software, select ESP32-S3 and USB. 
+ Select the UART port number, and click START (not select any bin file). 
+ After programming, click on "ERASE". 
+ Waiting for Erase to Finish. 
+ Working with Arduino 
+ Environment Set-up 
+ Install Arduino IDE . 
+ Enter Arduino IDE after installation. 
+ Go to the board manager, search for esp32, select the latest version of esp32 by Espressif Systems at the bottom, and click install (if it doesn't install correctly, you can try using a phone hotspot). 
+ Restart the Arduino IDE after installation, and then you can use it. 
+ If the installation fails 
+ Failed to install 2.0.11 version: 
+ Download the resource file : 
+ Click on the path from the resource manager "c:\Users\Waveshare\AppData\Local\Arduino15\staging\packages" (Waveshare is the user name of the computer, and you need to turn on Show Hidden Files). 
+ Unzip the downloaded files to the packages file folder: 
+ Install it again: 
+ Restart the Arduino IDE after installation and you're ready to go! 
+ Run Example 
+ Create Example 
+ Above, change the project folder to c:\Users\Waveshare\AppData\Local\Arduino15\packages (Waveshare is the computer username) . 
+ Open Arduino IDE again. 
+ Demos can be created from the examples in the Project folder under File. 
+ The following is the RGB flashing example (File -> Sketchbook -> esp32 -> hardware -> esp32 -> 2.0.11 -> libraries -> ESP32 -> examples -> BlinkRGB under GPIO). 
+ Please replace the demo with the following code: 
+ #define PIN_NEOPIXEL 14
+void setup() {
+ // No need to initialize the RGB LED
+}
+// the loop function runs over and over again forever
+void loop() {
+ neopixelWrite(PIN_NEOPIXEL, RGB_BRIGHTNESS, 0, 0); // Red
+ delay(1000);
+ neopixelWrite(PIN_NEOPIXEL, 0, RGB_BRIGHTNESS, 0); // Green
+ delay(1000);
+ neopixelWrite(PIN_NEOPIXEL, 0, 0, RGB_BRIGHTNESS); // Blue
+ delay(1000);
+ neopixelWrite(PIN_NEOPIXEL, 0, 0, 0); // Off / black
+ delay(1000);
+}
+ Upload Demo 
+ Note that the pins need to be modified to the corresponding RGB pins! 
+ Select the development board and port. 
+ Search esp32s3, select ESP32S3 Dev Module, and the ports to download. 
+ After selecting, click to upload and Arduino IDE will start to compile and program the demo. 
+ After uploading, you can see the effect on the development board. 
+ Use in Micropython 
+ Flash Firmware Demo 
+ Download and unzip the MicroPython firmware: ( Flash Tool and Firmware ). 
+ Connect the device to the PC. 
+ Open the flash_download_tool_3.9.4.exe software, select ESP32-S3 and USB. 
+ Select the corresponding COM port, as we have configured it well, just click on "Start" to download. (If the COM port is not identified, please press and hold the BOOT key, press the RESET key, and then release the RESET key first.) 
+ If you encounter downloading delays or the download doesn't start, you can enter Download mode, press and hold the BOOT key while pressing the RESET key, and then release the RESET key first. Try to download it again, and wait for the flashing process to complete. 
+ Preparation 
+ Thonny 
+ Install Thonny ( Thonny IDE ) 
+ Open Thonny, click on "Python x.x.x" at the bottom right, and select "Configure interpreter". 
+ In the popup window, select "Interpreter" -> Interpreter select "MicroPython (ESP32)". 
+ Save the setting. 
+ Click to stop, Shell window appears "MicroPython v1.22.1 on 2024-01-05;Generic ESP32S3 module with ESP32S3 Type "help()" for more information.", which means the connection is successful. 
+ Examples 
+ Please note that the brightness of the LED beads should not be adjusted to too large, the brightness is too high will lead to a rapid rise in temperature, which will lead to board damage. 
+ The following demonstrates device control on the Arduino IDE. 
+ Library Installation 
+ Install Adafruit NeoPixel library (Select the library file corresponding to the version below, otherwise it may be incompatible with the demo) : 
+ Install Adafruit NeoMatrix library (Select the library file corresponding to the version below, otherwise it may be incompatible with the demo) : 
+ Install ALL: 
+ Install Adafruit GFX Library (Select the library file corresponding to the version below, otherwise it may be incompatible with the demo) : 
+ Install ALL: 
+ Install FastLED library (Select the library file corresponding to the version below, otherwise it may be incompatible with the demo) : 
+ Install SensorLib library for QMI8658 (Select the library file corresponding to the version below, otherwise it may be incompatible with the demo) : 
+ Display Characters 
+ Please note that the brightness of the LED beads should not be adjusted to too large, the brightness is too high will lead to a rapid rise in temperature, which will lead to board damage. 
+ Install Corresponding Library Files . 
+ Download Sample Demo , the examples in the Font folder in the example are for mobile display characters. 
+ As shown below, 26 lowercase characters display as follows: 
+ The characters inside the quotation marks can be modified to display the corresponding characters on the ESP32-S3-Matrix. 
+ After modification, upload the demo and use. 
+ Dynamic Game 
+ Please note that the brightness of the LED beads should not be adjusted to too large, the brightness is too high will lead to a rapid rise in temperature, which will lead to board damage. 
+ Install the corresponding library files . 
+ Download the sample demo , The example in the "Game" folder of the sample is a small game where a light bead moves aligning with the tilt of ESP32-S3-Matrix. 
+ Uploading the demo and use it. 
+ After successfully uploading the demo, a bead will be on near the center position. 
+ The lit bead will move according to the current tilt angle of the device. 
+ The demo can be modified according to the requirement to achieve more complex operations. 
+ RGB Color 
+ Install the corresponding library files . 
+ Download the sample demo . The example in the "Color" folder of the sample is a rather cool color flow. 
+ Upload the demo and use it. 
+ After successfully uploading the demo, the board will display colors in a flowing state. 
+ The demo can be modified according to requirements to achieve more complex operations. 
+ Web Page Control 
+ Please note that the brightness of the LED beads should not be adjusted to too large, the brightness is too high will lead to a rapid rise in temperature, which will lead to board damage. 
+ Install the corresponding library files . 
+ Download the sample demo . The example in the "HTTP" folder of the sample allows controlling ESP32-S3-Matrix display via a web page. 
+ Uploading the demo to use it. Once the demo is successfully uploaded, follow the instructions below: 
+ Control the device (phone, computer, etc.) to connect to the WIFI named ESP32-S3-Matrix. 
+ Once successfully connected to the WIFI, you can enter the ESP32-S3-Matrix control page by typing "10.10.10.1" into your browser's address bar and pressing Enter. 
+ 10.10.10.1
+ The web page contains two global refresh buttons for controlling ESP32-S3-Matrix, as well as a text box and a submit button. 
+ After entering characters into the text box, clicking the Submit button will cause the characters in the text box to flow and display on the ESP32-S3-Matrix. 
+ Resources 
+ Demo 
+ Demo 
+ Application Example 
+ Transparent Edgelit Display 
+ 3D Model 
+ 3D model 
+ Software 
+ Programming Software 
+ VScode 
+ Arduino IDE 
+ UART 
+ SSCOM Serial Assistant 
+ Flash 
+ Flash download tool 3.9.5.0 
+ Bluetooth 
+ Bluetooth Debug Assistant 
+ Schematic 
+ Schematic 
+ ESP32-S3 Datasheet 
+ ESP32-S3 Datasheet 
+ ESP32-S3 Technical Reference Datasheet 
+ Official ESP32 Documentation 
+ ESP-IDF Official Document 
+ Project Resources 
+ This section features third - party project resources. We merely provide links and bear no responsibility for content updates or maintenance. Thank you for your understanding. 
+ Shaan Builds Things-Building a Pomodoro Cube / ADHD Timer with waveshare esp32 s3 matrix 
+ Youtube : https://www.youtube.com/watch?v=kdcDifNHN1g 
+ Github : https://github.com/shantanugoel/pomodoro_cube 
+ iHayri1-Worlds smallest and cutest LightCube 
+ Youtube : https://youtu.be/dSzbBcnNumk 
+ Github : https://github.com/ihayri/LightCube-using-64-RGB-LED-Matrix-Board 
+ Paul Lagier-I Built This to Stop Checking My Phone 
+ Youtube : https://www.youtube.com/watch?v=7-QyHpgGRTI 
+ Guide : https://ko-fi.com/s/59ad008739 
+ FAQ 
+ Question: Why does it keep resetting after uploading the demo?
+   Answer: 
+ Please check if the configuration options are matched. 
+ {{{5}}} 
+ Question: Compile failed, can't find the specified file?
+   Answer: 
+ Please select the driver object again and compile it again. 
+ {{{5}}} 
+ Question: After the module downloads the demo and re-downloads it, sometimes it fails to connect to the serial port, or the flashing fails?
+   Answer: 
+ Method 1: Press the reset button for more than 1 second, wait for the PC to recognize the device again, and then proceed with the download. 
+Method 2: You can long-press the BOOT button, simultaneously press the RESET button, then release the RESET button, and finally release the BOOT button. This will put the module into download mode and can resolve most download issues.
+ {{{5}}} 
+ Question: No ESP option below when setting up an environment or building a project?
+   Answer: 
+ In VSCode, click the shortcut F1 , and search for Espressif IDF , you will find that it is designated as an untrusted extension, set it as trusted.
+ {{{5}}} 
+ Question: Switch to the same ESP model and encounter issues with program flashing and program execution?
+   Answer: 
+ Please select the COM port and driver object again after switching ESP, then compile and flash.
+ {{{5}}} 
+ Question: After powering up the module, the recognized serial devices and USB ports keep resetting and restarting?
+   Answer: 
+ Check whether the power supply voltage for the USB port is less than 5V, in general, if it is 4.9V or more, the module's two USB ports can be used normally. If it is lower than 4.9V, the power supply may be insufficient and the USB port may disconnect. In this case, you should replace it with a USB port with sufficient voltage.
+ {{{5}}} 
+ Question: I can't get to the debug page on JTAG debugging?
+   Answer: 
+ Close OpenOCD below and reopen OpenOCD.
+ {{{5}}} 
+ Question: Does the esap32-s3 8x8 matrix support WLED?
+   Answer: 
+ It supports, ESP32-s3-8x8 is based on RGB WS2812B.
+ {{{5}}} 
+ Support 
+Technical Support
+If you need technical support or have any feedback/review, please click the Submit Now button to submit a ticket, Our support team will check and reply to you within 1 to 2 working days. Please be patient as we make every effort to help you to resolve the issue. 
+Working Time: 9 AM - 6 PM GMT+8 (Monday to Friday)
+ Submit Now 
+ Retrieved from " https://www.waveshare.com/w/index.php?title=ESP32-S3-Matrix&oldid=110627 " 
+ Login / Create Account 
