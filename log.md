@@ -102,3 +102,19 @@
 - 删除自造的"背面 U 形焊盘"（官方文档无此说法，系之前臆测，已订正）。
 - 新增 raw/datasheets/m5stack-timercam-f_library-power.txt（库源码摘录）。
 - 残留（均属归档类，非数据缺口）：原理图 PDF / OV3660 datasheet 待归档入 raw/；OV3660 SCCB 7 位地址(0x3C)待核实（esp32-camera 会自动探测）。
+
+## [2025-07-21] lint | 最终体检（三块板全部定稿后）
+
+检查 10 项，结果：
+- [1 链接] 67 个 md/pdf 链接，0 broken ✅
+- [2 index 覆盖] 4 页全在目录，无悬空 ✅
+- [3 反向链接] refs↔used_by 0 问题 ✅
+- [4 芯片一致] index 表与各页 frontmatter 0 冲突 ✅
+- [5 stale] 发现并修复：boards/README.md「已收录」仍写 StickC Plus2=ESP32-PICO-D4（旧值）→ 改为 ESP32-PICO-V3-02。StickC 页面里的 PICO-D4 是 Plus-vs-Plus2 对比表中的有意引用，保留。
+- [6 孤儿页] 0 ✅
+- [7 frontmatter] 4 页 type/必填字段齐全 ✅
+- [8 examples] 所有示例都有 platformio.ini + src，页面引用的示例均存在 ✅
+- [9 §8 不重复] OV3660 器件细节只在模组页，板子页无重复 ✅
+- [10 TODO] 仅剩归档类（原理图/OV3660 datasheet 待存 raw/）+ OV3660 SCCB 地址 0x3C（待核实，驱动自动探测）+ index 里对比页候选（非缺口）。无数据缺口 ✅
+
+结论：三块板 + OV3660 模组页全部定稿，零数据缺口，零断链。wiki 可用。
