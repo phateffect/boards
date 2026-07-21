@@ -6,7 +6,7 @@ vendor: M5Stack
 aliases: [TimerCam F, TimerCamera-F, SKU U082-F]
 chip: ESP32-D0WDQ6-V3
 references_modules:
-  - ov3660-camera          # 组合体：ESP32 + OV3660 摄像头模组（见 §8）
+  - ov3660-camera
 onboard_modules:
   - OV3660 camera (120° fisheye)   # → 见 modules/ov3660-camera，本页不重复器件细节
   - BM8563 RTC

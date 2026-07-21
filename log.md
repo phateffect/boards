@@ -26,3 +26,29 @@
   - StickC Plus2 的 BtnA/B 与 G37/G39 对应、HAT 精确排布、电池容量、Plus2 是否换 PMU
   - TimerCam F 的 BM8563 IRQ 具体唤醒 GPIO、背面 U 形焊盘定义
   - 各板官方原理图 PDF / 引脚图 / OV3660 datasheet 入 `raw/`
+
+## [2025-07-21] lint | 首次体检：修 2 处，剩 8 处数据缺口待源
+
+检查项：结构/链接、反向链接(refs<->used_by)、index 覆盖、孤儿页、芯片一致性、示例与页面引脚一致性、stale 文案。
+
+**修复（已改）：**
+- stale：`boards/README.md`、`modules/README.md` 的「已收录」还写「当前为空」→ 更新为真实清单（3 板 / 1 模组）。
+- 健壮性：`m5stack-timer-cameraf` frontmatter 的 `references_modules` 列表项带行内 YAML 注释，导致朴素解析器误判反向链接断裂 → 去掉行内注释，注释挪到正文（frontmatter 纯 slug，便于 Dataview/lint 解析）。
+
+**通过：**
+- 链接：37 个相对 md 链接全部解析（0 broken）；index 链接 0 broken。
+- index 覆盖：4 个页面全部入 index（无遗漏、无悬空）。
+- 反向链接：`TimerCamF --refs--> ov3660-camera`，`ov3660.used_by = [timer-cameraf]`，双向一致（0 problems）。
+- 芯片一致性：index 与各页 frontmatter 完全一致（ESP32-PICO-D4 / ESP32-S3 / ESP32-D0WDQ6-V3）。
+- 示例↔页面引脚一致：StickC LED=G10、Matrix=G14、TimerCam LED=G2、camera_stream DVP 接线与页面表一致。
+- §8 不重复原则：OV3660 器件细节只在模组页；板子页仅给板级 DVP 接线，无矛盾。
+
+**剩余数据缺口（待源，按优先级）：**
+1. [waveshare-esp32-s3-matrix] 20 个引出 GPIO 逐脚定义（官方只在 Pinout 图）— 需图入 `raw/photos/`。
+2. [m5stack-timer-cameraf] BM8563 RTC 唤醒 IRQ 具体 GPIO；背面 U 形焊盘定义 — 需原理图 PDF。
+3. [m5stack-stickc-plus2] BtnA/B 与 G37/G39 的精确对应（M5 库定义）；红色 LED 极性。
+4. [m5stack-stickc-plus2] 电池容量（约 200mAh 待核实）；Plus2 是否仍为 AXP192 PMU。
+5. [ov3660-camera] SCCB 默认 7 位地址（0x3C 待核实）。
+6. 所有板：官方原理图 PDF / 引脚图 / OV3660 datasheet 入 `raw/`。
+7. 验证示例 platformio board id：`m5stick-c`、`esp32-s3-devkitc-1`、`m5stack-timer-cam` 是否在用平台版本中存在。
+8. 候选新页：ESP32 摄像头板对比页、可穿戴板对比页（查询沉淀）。

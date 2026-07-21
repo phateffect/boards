@@ -9,4 +9,6 @@
 
 ## 已收录
 
-> 见 [`../index.md`](../index.md)。当前为空，待录入。
+> 完整目录见 [`../index.md`](../index.md)。当前收录 1 个：
+>
+> - [OV3660 Camera](ov3660-camera/README.md) — 器件事实源，被 [Timer Camera F](../boards/m5stack-timer-cameraf/README.md) 使用
