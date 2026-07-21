@@ -8,7 +8,7 @@ chip: ESP32-S3
 references_modules: []
 onboard_modules:
   - 8×8 WS2812 RGB LED matrix (64 LEDs, DIN=G14)
-  - QMI8658 6-axis IMU (accel/gyro, I2C: SDA=GPIO11/SCL=GPIO12, INT1=GPIO10/INT2=GPIO13, addr 0x6A)
+  - QMI8658 6-axis IMU (accel/gyro, I2C: SDA=GPIO11/SCL=GPIO12, INT1=GPIO10/INT2=GPIO13, addr 0x6A @ SA0=GND)
   - ME6217C33M5G 3.3V LDO (800mA)
 date_added: 2025-07-21
 sources:
@@ -40,7 +40,7 @@ tags: [board, esp32-s3, waveshare, led-matrix, imu]
 | 板载模组 | 占用引脚 | 功能 | 说明 |
 |---|---|---|---|
 | 8×8 RGB 矩阵 (WS2812 × 64) | **G14 (DIN)** | 单线 RGB | Arduino core `PIN_NEOPIXEL=14`；矩阵 **DOUT** 引出至 G37 旁焊盘（级联扩展用） |
-| QMI8658 六轴 IMU | I2C: **SDA=GPIO11 · SCL=GPIO12**；INT1=GPIO10 · INT2=GPIO13 | 加速度+陀螺仪 | 7 位地址 `0x6A`（QMI8658 默认；SA0=pin1 接法以原理图为准）；均为专用内部 GPIO，**未引出** |
+| QMI8658 六轴 IMU | I2C: **SDA=GPIO11 · SCL=GPIO12**；INT1=GPIO10 · INT2=GPIO13 | 加速度+陀螺仪 | 7 位地址 **`0x6A`**（SA0=pin1 接 **GND**，据原理图核实）；均为专用内部 GPIO，**未引出** |
 | ME6217C33M5G (LDO) | — | 3.3V 稳压 | 5V → 3.3V，Max **800mA**；`3V3(OUT)` 即其输出 |
 | BOOT 按键 | GPIO0 | BOOT / strapping | 按住 BOOT + 按 RESET 进入下载模式 |
 | RESET 按键 | EN / CHIP_PU | 复位 | — |

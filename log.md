@@ -65,3 +65,8 @@
 - 页面“引出引脚”表 / “物理排布” ASCII 填实（USB 在顶、丝印正读、LED 面朝自己）。
 - 新增 `examples/imu_qmi8658/`（I2C 扫描 + WHO_AM_I 探测，版本无关）。
 - 原理图 PDF 入库后，Waveshare 该板的「引脚未核实」TODO 全部清零；残留：QMI8658 SA0(pins1) 接法（决定 0x6A/0x6B，按惯例按 0x6A 记）。
+
+## [2025-07-21] update | Waveshare ESP32-S3-Matrix：QMI8658 地址定稿
+
+- 用户确认原理图上 QMI8658C pin1(SA0) 接 **GND** → 7 位 I2C 地址 = **0x6A**（定稿，去掉 hedge）。
+- 至此 Waveshare ESP32-S3-Matrix 全部引脚/地址 TODO 清零；仅剩"原理图 PDF 本地归档已完成"。
