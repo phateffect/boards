@@ -1,0 +1,31 @@
+# 原始资料：官方 wiki 正文 + Onboard Resources（用户粘贴）
+# 板子：Waveshare ESP32-S3-Matrix  SKU 27119
+# 来源：https://docs.waveshare.com/ESP32-S3-Matrix
+# 录入：2025-07-21（用户提供）
+# 注：相对之前抓取的页面文本，本块补充了 QMI8658 IMU、ME6217 800mA、SKU 等。
+
+The ESP32-S3-Matrix is a compact microcontroller development board featuring multiple digital interfaces. Despite its very small form factor, it brings out 17 GPIOs and includes an onboard 8×8 RGB LED matrix for displaying cool lighting effects or simple images.
+
+Hardware-wise, it is built around the ESP32-S3 chip, which integrates a high-performance Xtensa® 32-bit LX7 dual-core processor, an ultra-low-power coprocessor, Wi-Fi baseband, Bluetooth baseband, RF module, and various peripherals.
+
+SKU    Product
+27119    ESP32-S3-Matrix
+
+Features
+- ESP32-S3 chip ... dual-core ... up to 240 MHz
+- Integrated 512 KB SRAM, 384 KB ROM, 16 KB RTC SRAM, and 4MB Flash memory
+- Integrated Bluetooth LE and 2.4 GHz Wi-Fi
+- USB Type-C interface
+- 8×8 array of 64 RGB LEDs
+- Supports multiple low-power operating states
+- warning: Do not set the LED brightness too high; excessive brightness will cause the temperature to rise rapidly and may damage the board.
+
+Onboard Resources
+- USB Type-C connector
+- 8×8 RGB LED matrix
+- BOOT button  Press while resetting to enter download mode
+- RESET button
+- ME6217C33M5G  Low-dropout LDO, current (Max) 800mA
+- QMI8658  QST 6-axis sensor (3-axis accelerometer, 3-axis gyroscope)
+- ESP32-S3  Dual-core processor, up to 240MHz
+- Dout pin  For extending RGB matrix

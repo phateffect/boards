@@ -52,3 +52,16 @@
 6. 所有板：官方原理图 PDF / 引脚图 / OV3660 datasheet 入 `raw/`。
 7. 验证示例 platformio board id：`m5stick-c`、`esp32-s3-devkitc-1`、`m5stack-timer-cam` 是否在用平台版本中存在。
 8. 候选新页：ESP32 摄像头板对比页、可穿戴板对比页（查询沉淀）。
+
+## [2025-07-21] update | Waveshare ESP32-S3-Matrix：原理图入库 + 引脚填实（QMI8658 核实）
+
+- 用户补充官方 wiki（中/英）+ 用户手转 Pinout；新增发现：板载 **QMI8658 六轴 IMU**（之前缺漏）。
+- 用户放入官方原理图 PDF → 入库 `raw/schematics/waveshare-esp32-s3-matrix.pdf`。
+- 据原理图（全局网络标号）核实 Waveshare ESP32-S3-Matrix 全部引脚：
+  - **QMI8658（U67）I2C**：SDA=**GPIO11**、SCL=**GPIO12**；INT1=**GPIO10**、INT2=**GPIO13**；地址 `0x6A`。GPIO10–13 均为内部专用，**不在引出的 17 个 GPIO 内**。
+  - **矩阵**：DIN(LED_DIN)=**GPIO14**；级联输出 DOUT 为测试点 TP1（板子上靠近 GPIO37 的 “Dout” 口）。
+  - **USB**：USB0_N/P = GPIO19/20（原生 USB CDC）；**UART0**：TX=GPIO43、RX=GPIO44。
+  - **LDO**：ME6217C33M5G，Max 800mA。
+- 页面“引出引脚”表 / “物理排布” ASCII 填实（USB 在顶、丝印正读、LED 面朝自己）。
+- 新增 `examples/imu_qmi8658/`（I2C 扫描 + WHO_AM_I 探测，版本无关）。
+- 原理图 PDF 入库后，Waveshare 该板的「引脚未核实」TODO 全部清零；残留：QMI8658 SA0(pins1) 接法（决定 0x6A/0x6B，按惯例按 0x6A 记）。

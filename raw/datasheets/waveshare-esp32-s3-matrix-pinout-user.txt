@@ -1,0 +1,30 @@
+# 原始资料：用户从官方 Pinout 图转写（verbatim）
+# 板子：Waveshare ESP32-S3-Matrix
+# 来源：官方 wiki Pinout Definition 图，用户肉眼转写
+# 录入：2025-07-21（用户提供）
+# 视角：LED（8x8 矩阵）面向观察者；# 分隔板子左右；| 表示该脚兼有多种 IO MUX 功能
+
+LED面向我的时候
+# 分割板子的左右，｜代表这些功能兼有
+
+5V # 33|SPI|I2C|I2S|PWM|UART
+G # 34|SPI|I2C|I2S|PWM|UART
+3V3(OUT) # 35|SPI|I2C|I2S|PWM|UART
+UART|PWM|I2S|ADC|I2C|SPI|GP7 # 36|SPI|I2C|I2S|PWM|UART
+UART|PWM|I2S|ADC|I2C|SPI|6 # 37|SPI|I2C|I2S|PWM|UART
+UART|PWM|I2S|ADC|I2C|SPI|5 # 38|SPI|I2C|I2S|PWM|UART
+UART|PWM|I2S|ADC|I2C|SPI|4 # 39|SPI|I2C|I2S|PWM|UART
+UART|PWM|I2S|ADC|I2C|SPI|3 # 40|SPI|I2C|I2S|PWM|UART
+UART|PWM|I2S|ADC|I2C|SPI|2 # TX|UART0 TX
+UART|PWM|I2S|ADC|I2C|SPI|1 # RX|UART0 RX
+
+补充（用户提供）：
+- 有1个BOOT button 和1个RESET button
+- 板载 1颗 ME6217C33M5G（3.3V LDO 稳压器；3V3(OUT) 即其输出）
+- GPIO37 旁边有一个 "Dout" 焊盘（WS2812 矩阵数据输出，用于级联更多灯）
+
+# 推断（LLM）：
+# - GPIO14 = 矩阵 DIN（PIN_NEOPIXEL），被矩阵占用，故不在排针中
+# - USB-C 接 ESP32-S3 原生 USB（D-/D+，通常 GPIO19/20，内部连接），用于供电+烧录(CDC)
+# - UART0: TX=GPIO43, RX=GPIO44（已引出）
+# - GPIO3 为 ESP32-S3 strapping 引脚，上电电平影响启动
