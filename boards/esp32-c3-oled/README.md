@@ -10,7 +10,7 @@ onboard_modules:
   - SSD1306 128×64 OLED (I2C: SCL=GPIO6, SDA=GPIO5)
   - ME6211C33 LDO 3.3V
   - Power LED (红色)
-date_added: 2025-07-21
+date_added: 2026-07-23
 sources:
   - raw/schematics/esp32-c3-oled.pdf
   - raw/c3-oled.ino
@@ -118,5 +118,5 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 
 ## 参考来源
 
-- `raw/schematics/esp32-c3-oled.pdf`（原理图 PDF，2025-07-21 入库）
-- `raw/c3-oled.ino`（原始 Arduino 示例，2025-07-21 入库）
+- `raw/schematics/esp32-c3-oled.pdf`（原理图 PDF，2026-07-23 入库）
+- `raw/c3-oled.ino`（原始 Arduino 示例，2026-07-23 入库）

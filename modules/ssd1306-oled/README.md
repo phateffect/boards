@@ -5,7 +5,7 @@ slug: ssd1306-oled
 vendor: generic
 device: SSD1306
 interface: [I2C]
-date_added: 2025-07-21
+date_added: 2026-07-23
 used_by: [esp32-c3-oled]
 sources: []
 tags: [module, oled, ssd1306, i2c, display]

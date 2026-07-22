@@ -139,7 +139,7 @@
 - ⚠️ 日期备注：本 raw 源自带日期 **2026-07-21**，而既有 wiki 条目均为 2025-07-21。按时间线理解为「2025 据官方文档建页 → 2026 实战 bring-up 后回填」，故保留板子 `date_added=2025-07-21`、本条与 index 用 2026-07-21。若 2026 系笔误请告知订正。
 - 残留：`examples/imu_qmi8658/platformio.ini` 与 matrix_smile 共用同一 `esp32-s3-devkitc-1`+`board_build.flash_size=4MB`，同样有 boot-loop 风险（本 raw 仅涉 LED，未改 IMU 示例）；是否同步加注释待定。
 
-## [2025-07-21] ingest | ESP32-C3-OLED：自制板入库
+## [2026-07-23] ingest | ESP32-C3-OLED：自制板入库
 
 - 新增 boards:
   - `boards/esp32-c3-oled/` — ESP32-C3，板载 SSD1306 128×64 OLED（I2C: SDA=GPIO5, SCL=GPIO6），USB-C，4MB Flash，11 GPIO 引出，BOOT/RESET 按键。
@@ -152,3 +152,14 @@
 - TODO（lint 候选）：
   - SSD1306 I2C 默认地址 0x3C 待核实（当前按原理图标注记）
   - ME6211C33 LDO 最大输出电流待核实（当前记 300mA）
+
+## [2026-07-23] fix | 订正 ESP32-C3-OLED 录入日期（copy-paste 误写 2025-07-21 → 实际 2026-07-23）
+
+- 系统日期确认今天 = 2026-07-23；c3-oled 相关文件 mtime 也是 7 月 23 日。
+- 原录入把日期 copy-paste 成 2025-07-21（其他板 2025 年建页的真实日期），与实际不符。就地订正为 2026-07-23：
+  - `boards/esp32-c3-oled/README.md`：frontmatter `date_added` + 参考来源 2 处「入库」日期。
+  - `modules/ssd1306-oled/README.md`：frontmatter `date_added`。
+  - `log.md`：c3-oled ingest 条目 header 日期（就地订正 + 本条记录留痕）。
+  - `index.md`：「最后更新」。
+- 不动其他板的 2025-07-21（那是 2025 年建 wiki 的真实日期；时间线自洽：2025 建页 → 2026 实战回填/新增）。
+- matrix bring-up（raw 自带 2026-07-21）日期本来就对，不改。
