@@ -163,3 +163,23 @@
   - `index.md`：「最后更新」。
 - 不动其他板的 2025-07-21（那是 2025 年建 wiki 的真实日期；时间线自洽：2025 建页 → 2026 实战回填/新增）。
 - matrix bring-up（raw 自带 2026-07-21）日期本来就对，不改。
+
+## [2026-07-23] ingest | SSD1306 屏体规格书入库 + 订正分辨率（128×64 → 72×40，0.96" → 0.42"）
+
+- 原始资料：`raw/c3-oled-screen.pdf`（Newvision **N042-7240TSWEG01-H16** 屏体规格书，Ver A / 2019-05-15）。
+- **关键订正（冲突解决，以新源为准）**：c3-oled 录入时把 OLED 误记为「0.96" 128×64」（无来源的默认假设），据本规格书核实实际为 **0.42" 72×40**：
+  - 分辨率 72×40；1/40 Duty；单色白；像素间距 0.128×0.13mm；有效区 9.196×5.18mm。
+  - 驱动 IC 确为 **SSD1306**（不变；IC 可寻址到 128×64，但本面板物理 72×40，init mux=`0x27`=1/40）。
+  - I2C 地址 **0x3C**（写 `0x78`，SA0=0）——**确认**，原「待核实」消除。
+- 改动：
+  - `modules/ssd1306-oled/README.md`：全面订正（0.42"/72×40），补面板型号、COG 16-pin 引脚表、电气特性（VDD 1.65–3.3V、VCC ~7.25V 内部 charge pump、-40~85°C、360cd/m²）；`sources` 补规格书；示例链接到板子页 oled_hello_world。
+  - `boards/esp32-c3-oled/README.md`：frontmatter / 一句话 / 概览 / 表 A 共 4 处 128×64/0.96 → 72×40/0.42"。
+  - `examples/oled_hello_world/src/main.cpp`：SCREEN 128×64 → **72×40**，重排布局以适配小屏（原 textSize 3「Hello/World」+ `drawRect(28,24,72,40)` 在 72×40 上会溢出）。
+  - `index.md`：模块表标 72×40 + 最后更新。
+- 残留 TODO：SSD1306 主控 IC datasheet（Solomon Systek）待入库（本规格书引用其 Technical Manual）。
+- 提示：若 c3-oled 板实际焊的不是这块 72×40 屏（而是别的型号），告知订正；本次订正依据 = 屏体规格书 + 文件名 `c3-oled-screen.pdf`。
+
+## [2026-07-23] fix | ESP32-C3-OLED / SSD1306 模组：标注单色
+
+- 确认 SSD1306 为单色 OLED 驱动芯片（1-bit 像素，非彩色），board 页面 + module 页面 + 概览描述全部补上"白色单色"标注。
+- 彩色 OLED 需 SSD1331/SSD1351 等驱动，SSD1306 不支持。

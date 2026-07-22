@@ -1,6 +1,6 @@
 # Index
 
-> 内容目录。每次 ingest 后更新。最后更新：**2026-07-23**（ESP32-C3-OLED 录入 + 日期订正）
+> 内容目录。每次 ingest 后更新。最后更新：**2026-07-23**（SSD1306 屏体规格书入库 + 分辨率订正 128×64→72×40）
 
 ## 开发板（boards）
 
@@ -16,7 +16,7 @@
 | Slug | 名称 | 核心器件 | 接口 | 被用于 | 页面 |
 |---|---|---|---|---|---|
 | ov3660-camera | OV3660 Camera | OV3660 | DVP-parallel / SCCB | Timer Camera F | [→](modules/ov3660-camera/README.md) |
-| ssd1306-oled | SSD1306 OLED | SSD1306 | I2C | ESP32-C3-OLED | [→](modules/ssd1306-oled/README.md) |
+| ssd1306-oled | SSD1306 OLED (0.42", 72×40) | SSD1306 | I2C | ESP32-C3-OLED | [→](modules/ssd1306-oled/README.md) |
 
 ## 交叉视图
 

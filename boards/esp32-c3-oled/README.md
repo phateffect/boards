@@ -7,7 +7,7 @@ aliases: [ESP32-C3 with OLED]
 chip: ESP32-C3
 references_modules: [ssd1306-oled]
 onboard_modules:
-  - SSD1306 128×64 OLED (I2C: SCL=GPIO6, SDA=GPIO5)
+  - SSD1306 72×40 白色单色 OLED, 0.42" (I2C: SCL=GPIO6, SDA=GPIO5, addr 0x3C)
   - ME6211C33 LDO 3.3V
   - Power LED (红色)
 date_added: 2026-07-23
@@ -19,13 +19,13 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 
 # ESP32-C3-OLED
 
-> 自制 ESP32-C3 开发板，板载 **SSD1306 128×64 OLED 显示屏**，USB-C 供电/烧录，引出 11 个 GPIO（含 ADC / I2C / SPI / UART），适合小型物联网显示项目。
+> 自制 ESP32-C3 开发板，板载 **SSD1306 72×40 白色单色 OLED 显示屏（0.42"）**，USB-C 供电/烧录，引出 11 个 GPIO（含 ADC / I2C / SPI / UART），适合小型物联网显示项目。
 
 ## 概览
 
 - 厂商 / 型号：自制 / ESP32-C3-OLED
 - USB-C 供电 + 烧录
-- 板载 SSD1306 OLED（I2C 连接）
+- 板载 SSD1306 72×40 白色单色 OLED（0.42"，I2C 连接）
 - BOOT + RESET 按键
 
 ## 主控芯片
@@ -39,7 +39,7 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 
 | 板载模组 | 占用引脚 | 功能 | 说明 |
 |---|---|---|---|
-| SSD1306 OLED | GPIO6(SCL), GPIO5(SDA) | I2C | 板载 OLED 显示屏，详见 [SSD1306 OLED 模组页](../../modules/ssd1306-oled/README.md) |
+| SSD1306 OLED (白色单色, 0.42", 72×40) | GPIO6(SCL), GPIO5(SDA) | I2C | 板载 72×40 单色 OLED 显示屏，详见 [SSD1306 OLED 模组页](../../modules/ssd1306-oled/README.md) |
 | ME6211C33 LDO | — | 3.3V 稳压 | USB 5V → 3.3V，Max 300mA（据原理图 C1=4.7μF 输入、C2=4.7μF 输出） |
 | Power LED (红色) | VCC 经 R(4.7K) | 电源指示 | 常亮，不可编程 |
 | BOOT 按键 | GPIO9 | BOOT / strapping | 按住 BOOT + 按 RESET 进入下载模式 |
