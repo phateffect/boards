@@ -118,3 +118,37 @@
 - [10 TODO] 仅剩归档类（原理图/OV3660 datasheet 待存 raw/）+ OV3660 SCCB 地址 0x3C（待核实，驱动自动探测）+ index 里对比页候选（非缺口）。无数据缺口 ✅
 
 结论：三块板 + OV3660 模组页全部定稿，零数据缺口，零断链。wiki 可用。
+
+## [2026-07-21] ingest | Waveshare ESP32-S3-Matrix：bring-up 踩坑流水入库（字节序/像素映射/USB-Serial-JTAG/4MB boot loop）
+
+- 原始资料：`raw/matrix-s3-onboarding-issues-2026-07-21.md`（从零点灯 + WiFi 配网小程序全流程踩坑，7 条「现象→根因→解法」）。
+- 本条是「把实战经验回填 wiki」：原始流水自述「本文件只是踩坑流水，建议 ingest 进板子页」，故不新建页面，全部折叠进既有 `boards/waveshare-esp32-s3-matrix/README.md`。
+- 新增/订正的板子事实（写入板子页）：
+  - **WS2812 字节序 = RGB（非 GRB）** → 用 `NEO_RGB`（之前板子页未记；标定法=纯原色行，低亮度 HSV 会误导）。
+  - **像素映射 = 行主序、非蛇形、idx0=左上角**（行↓列→）（之前未记）。
+  - USB-C = ESP32-S3 **原生 USB-Serial-JTAG**，**无 USB-UART 桥**，VID:PID=`303A:1001`，板上**唯一串口通路**（之前仅写「原生 USB CDC」）。
+  - 亮度：`setBrightness(b)` 降每通道占空比，`1` 为硬件下限，再暗需 app 时间抖动（会频闪）；与项目固件 LIT_VALUE=16 的取舍一致，板子页记为范围 1–~20 + 热警告。
+- 「特殊说明」大幅扩充：新增 bring-up 踩坑表（坑 0–6 一句话摘要 + 指向 raw），含：
+  - 坑1（关键）：stock `esp32-s3-devkitc-1` 实为 -N8(8MB)，镜像头写 8MB 在 4MB 板上 boot loop；`board_build.flash_size` 无效（elf2image 读 `upload.flash_size`）→ 需自定义 4MB board JSON。
+  - 坑2：esptool stub 在 USB-Serial-JTAG 不稳 → `--no-stub` 烧录。
+  - 坑3：pyserial 触发自动复位 → raw `os.open()` 读串口；`Serial` 须 HWCDC（`ARDUINO_USB_CDC_ON_BOOT=1`）。
+- 一致性修正（lint 级）：
+  - `examples/matrix_smile/src/main.cpp`：`NEO_GRB`→**`NEO_RGB`**（直接违反刚入库的字节序事实）；`setBrightness(20)`→`16` + 取舍注释；补像素映射注释。
+  - `examples/matrix_smile/platformio.ini`：加 boot-loop 警告注释（`esp32-s3-devkitc-1` 在本板需自定义 board，否则重启循环）。
+- frontmatter `sources` + 「参考来源」补 `raw/matrix-s3-onboarding-issues-2026-07-21.md`；index「最后更新」→ 2026-07-21。
+- ⚠️ 日期备注：本 raw 源自带日期 **2026-07-21**，而既有 wiki 条目均为 2025-07-21。按时间线理解为「2025 据官方文档建页 → 2026 实战 bring-up 后回填」，故保留板子 `date_added=2025-07-21`、本条与 index 用 2026-07-21。若 2026 系笔误请告知订正。
+- 残留：`examples/imu_qmi8658/platformio.ini` 与 matrix_smile 共用同一 `esp32-s3-devkitc-1`+`board_build.flash_size=4MB`，同样有 boot-loop 风险（本 raw 仅涉 LED，未改 IMU 示例）；是否同步加注释待定。
+
+## [2025-07-21] ingest | ESP32-C3-OLED：自制板入库
+
+- 新增 boards:
+  - `boards/esp32-c3-oled/` — ESP32-C3，板载 SSD1306 128×64 OLED（I2C: SDA=GPIO5, SCL=GPIO6），USB-C，4MB Flash，11 GPIO 引出，BOOT/RESET 按键。
+- 新增 modules:
+  - `modules/ssd1306-oled/` — SSD1306 OLED 模组页，`used_by: [esp32-c3-oled]`
+- 原理图 PDF 入库：`raw/schematics/esp32-c3-oled.pdf`
+- 示例代码入库：`boards/esp32-c3-oled/examples/oled_hello_world/`（Adafruit SSD1306，Hello World + 计数器 + 堆内存监控）
+- 原始 ino 文件保留在 `raw/c3-oled.ino`
+- 更新 `index.md`（新增板 + 模组 + 交叉视图 ESP32-C3 分类 + 组合体关系）
+- TODO（lint 候选）：
+  - SSD1306 I2C 默认地址 0x3C 待核实（当前按原理图标注记）
+  - ME6211C33 LDO 最大输出电流待核实（当前记 300mA）

@@ -16,6 +16,7 @@ sources:
   - raw/datasheets/waveshare-esp32-s3-matrix-onboard-resources.txt
   - raw/datasheets/waveshare-esp32-s3-matrix-pinout-user.txt
   - raw/schematics/waveshare-esp32-s3-matrix.pdf
+  - raw/matrix-s3-onboarding-issues-2026-07-21.md
 tags: [board, esp32-s3, waveshare, led-matrix, imu]
 ---
 
@@ -39,12 +40,12 @@ tags: [board, esp32-s3, waveshare, led-matrix, imu]
 
 | 板载模组 | 占用引脚 | 功能 | 说明 |
 |---|---|---|---|
-| 8×8 RGB 矩阵 (WS2812 × 64) | **G14 (DIN)** | 单线 RGB | Arduino core `PIN_NEOPIXEL=14`；矩阵 **DOUT** 引出至 G37 旁焊盘（级联扩展用） |
+| 8×8 RGB 矩阵 (WS2812 × 64) | **G14 (DIN)** | 单线 RGB | Arduino core `PIN_NEOPIXEL=14`；**字节序 = RGB（非 GRB，Adafruit NeoPixel 用 `NEO_RGB`）**；**像素映射 = 行主序、非蛇形、`idx0`=左上角**（行↓ 列→）；矩阵 **DOUT** 引出至 G37 旁焊盘（级联扩展用） |
 | QMI8658 六轴 IMU | I2C: **SDA=GPIO11 · SCL=GPIO12**；INT1=GPIO10 · INT2=GPIO13 | 加速度+陀螺仪 | 7 位地址 **`0x6A`**（SA0=pin1 接 **GND**，据原理图核实）；均为专用内部 GPIO，**未引出** |
 | ME6217C33M5G (LDO) | — | 3.3V 稳压 | 5V → 3.3V，Max **800mA**；`3V3(OUT)` 即其输出 |
 | BOOT 按键 | GPIO0 | BOOT / strapping | 按住 BOOT + 按 RESET 进入下载模式 |
 | RESET 按键 | EN / CHIP_PU | 复位 | — |
-| USB-C | USB D-/D+（GPIO19/GPIO20，内部连接） | USB | 供电 + 数据 / 烧录（原生 USB CDC）；D-/D+ 未引出 |
+| USB-C | USB D-/D+（GPIO19/GPIO20，内部连接） | USB | 供电 + 数据 / 烧录；接 ESP32-S3 **原生 USB-Serial-JTAG**（**无 USB-UART 桥**，VID:PID=`303A:1001`，枚举 "USB JTAG/serial debug unit"）；此为板上**唯一串口通路**；D-/D+ 未引出 |
 
 > ⚠️ 矩阵亮度不宜过高：官方提示高亮度会快速升温、可能损坏板子。
 > QMI8658 占用 GPIO10–13，**均不在引出的 17 个 GPIO 内**（专用内部走线），故排针上找不到这些脚。
@@ -104,10 +105,28 @@ tags: [board, esp32-s3, waveshare, led-matrix, imu]
 
 ## 特殊说明
 
-- 烧录/下载失败：按 RESET >1s 后重试；或进下载模式（按住 BOOT + 按 RESET，先松 RESET）。
-- USB-C 接 ESP32-S3 **原生 USB**（CDC），一般免驱；枚举名多为 "USB JTAG/serial debug unit"。
-- **GPIO3** 是 strapping 引脚，做外部 IO 时注意上电电平。
-- 矩阵 DIN=G14（`PIN_NEOPIXEL`），未引出；矩阵 DOUT 引出在 GPIO37 旁。
+### 板级基础
+- **GPIO3** 是 ESP32-S3 strapping 引脚，做外部 IO 时注意上电电平。
+- 下载模式：按住 **BOOT** + 按 **RESET**（先松 RESET）；普通复位按 RESET。
+- 矩阵 DIN=G14（`PIN_NEOPIXEL`），未引出；矩阵 DOUT 引出在 GPIO37 旁（级联扩展）。
+- USB-C 接 ESP32-S3 **原生 USB-Serial-JTAG**（无 USB-UART 桥），一般免驱；枚举名 "USB JTAG/serial debug unit"、VID:PID=`303A:1001`，是板上**唯一串口通路**。
+
+### bring-up 踩坑（详见 [`raw/matrix-s3-onboarding-issues-2026-07-21.md`](../../raw/matrix-s3-onboarding-issues-2026-07-21.md)）
+
+从零把这块板跑起来（PlatformIO + Arduino，写 WiFi 配网小程序）踩到 7 个坑，每条「现象→根因→解法」的完整版见上方原始流水。要点速查：
+
+| # | 现象 | 根因 | 解法 |
+|---|---|---|---|
+| 0 | `pio device list` 看到的串口 VID 不是 `303A`（如 `2D79`） | **USB 数据线不对**（充电线枚举成别的设备） | 换能传数据的 USB-C 线 |
+| 1 | 烧录后**反复重启**（boot loop，`spi_flash: ... smaller than the size in the binary image header(8192k)` 断言） | stock `esp32-s3-devkitc-1` 其实是 -N8（8MB），elf2image 按 `upload.flash_size=8MB` 把镜像头写成 8MB，本板只有 4MB → 断言重启。**`board_build.flash_size=4MB` 没用**（elf2image 读的是 board JSON 的 `upload.flash_size`，不是 `build.flash_size`） | 写**自定义 board JSON**（4MB + `default.csv`）；完整 JSON 见原始流水 |
+| 2 | `pio run -t upload` 烧不进（`No serial data received`） | esptool 软 stub 在 USB-Serial-JTAG 上切波特率/读 flash ID 时把链路搞挂 | ROM 模式 **`esptool --no-stub`** 烧录（偏移：bootloader@0x0 / partitions@0x8000 / boot_app0@0xe000 / firmware@0x10000） |
+| 3 | 串口读不到 / 一读就掉线（`Device not configured` / ENXIO） | pyserial `Serial()` 的 `tcsetattr()` 拉 DTR/RTS 触发 USB-Serial-JTAG 自动复位；且默认 `Serial=UART0` 在 app 接管后 ROM 桥停止 | 读串口用 **raw `os.open()`**（不走 termios）；app 开 **`-DARDUINO_USB_CDC_ON_BOOT=1`** 让 `Serial=HWCDC` |
+| 4 | 红↔绿反（红显成绿、青↔品红互换，蓝/黄/白不变） | WS2812 字节序是 **RGB**，Adafruit NeoPixel 默认 `NEO_GRB` | 声明用 **`NEO_RGB`**（字节序见上方板载模组表） |
+| 5 | 扩散动画奇数行错位 | 误以为蛇形走线；实为**行主序、非蛇形** | `idxToXY: y=i/8, x=i%8`（映射见上方板载模组表） |
+| 6 | 即便低占空比仍嫌亮 | WS2812 无独立亮度字节，靠 `setBrightness(b)` 降每通道占空比 | 全局设一次低亮度；`setBrightness(1)` 是硬件下限，再暗只能 app 时间抖动（代价是频闪）。亮度取舍见原始流水 |
+
+> 标定技巧：字节序/布局用**纯 RGB 原色行**标定（低亮度下 HSV 渐变会误导、分不清）；**先修字节序、再标布局**——红绿反会让基于颜色的标定结果互相矛盾，修对后才自洽。
+> ⚠️ 矩阵亮度不宜过高：官方提示高亮度会快速升温、可能损坏板子。
 
 ## 相关页面
 
@@ -120,4 +139,5 @@ tags: [board, esp32-s3, waveshare, led-matrix, imu]
 - `raw/datasheets/waveshare-esp32-s3-matrix-pinout-user.txt`（用户据官方 Pinout 图转写，2025-07-21）
 - `raw/datasheets/waveshare-esp32-s3-matrix-onboard-resources.txt`（官方 Onboard Resources，2025-07-21）
 - `raw/datasheets/waveshare-esp32-s3-matrix.txt`（官方 wiki 页面文本快照，2025-07-21）
+- `raw/matrix-s3-onboarding-issues-2026-07-21.md`（bring-up 踩坑流水，2026-07-21；USB-Serial-JTAG 烧录/串口、WS2812 字节序 RGB、像素映射、4MB boot loop、亮度等实战事实源）
 - 官方文档：<https://docs.waveshare.com/ESP32-S3-Matrix> · 中文：<https://www.waveshare.net/wiki/ESP32-S3-Matrix>
