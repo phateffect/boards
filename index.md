@@ -1,6 +1,6 @@
 # Index
 
-> 内容目录。每次 ingest 后更新。最后更新：**2026-07-23**（SSD1306 屏体规格书入库 + 分辨率订正 128×64→72×40）
+> 内容目录。每次 ingest 后更新。最后更新：**2026-07-23**（ESP32-C3-OLED 实板反馈：排针计数、GPIO9、USB/UART 订正）
 
 ## 开发板（boards）
 
@@ -9,7 +9,7 @@
 | m5stack-stickc-plus2 | M5StickC Plus2 | M5Stack | ESP32-PICO-V3-02 | LCD/IMU/RTC/MIC/IR+LED/蜂鸣器（无PMIC） | 否 | [→](boards/m5stack-stickc-plus2/README.md) |
 | waveshare-esp32-s3-matrix | ESP32-S3-Matrix | Waveshare | ESP32-S3 | 8×8 WS2812 矩阵 | 否 | [→](boards/waveshare-esp32-s3-matrix/README.md) |
 | m5stack-timer-cameraf | Timer Camera F | M5Stack | ESP32-D0WDQ6-V3 | OV3660 摄像头/RTC/LED | **是（+OV3660）** | [→](boards/m5stack-timer-cameraf/README.md) |
-| esp32-c3-oled | ESP32-C3-OLED | DIY | ESP32-C3 | SSD1306 OLED / LDO / LED | **是（+SSD1306）** | [→](boards/esp32-c3-oled/README.md) |
+| esp32-c3-oled | ESP32-C3-OLED | DIY | ESP32-C3 | SSD1306 0.42" 72×40 OLED / LDO / LED；16-pin / 13 GPIO signals | **是（+SSD1306）** | [→](boards/esp32-c3-oled/README.md) |
 
 ## 模组小板（modules）
 

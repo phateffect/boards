@@ -183,3 +183,13 @@
 
 - 确认 SSD1306 为单色 OLED 驱动芯片（1-bit 像素，非彩色），board 页面 + module 页面 + 概览描述全部补上"白色单色"标注。
 - 彩色 OLED 需 SSD1331/SSD1351 等驱动，SSD1306 不支持。
+
+## [2026-07-23] ingest | ESP32-C3-OLED 实板反馈：排针计数、GPIO9 与 USB/UART 订正
+
+- 原始资料：`raw/c3-boards.improve.20260723.md`（本地实板测试与文档复核反馈；按约定保持 raw 不变且不纳入仓库提交）。
+- OLED 项已在前一轮规格书 ingest 中完成：页面与示例均为 **0.42" 72×40**，示例直接使用 72×40 画布，已无 128×64 虚拟画布及 28/24 像素偏移。
+- 据原理图 JP1/JP2 核对排针：共 **16 个物理位置**，包含 3 个电源/地和 13 路 GPIO 信号；13 路为 GPIO0–10 加 GPIO20/21（UART0 RX/TX）。订正原“17 pin = 11 GPIO + 6 电源/功能”的矛盾，并解释“11”仅是不计 RX/TX 的标签数量。
+- 强化 GPIO9 风险说明：GPIO9 同时是 strapping 引脚与 BOOT 按键网络（10K 上拉、按下接地），不再将 GPIO8/9 推荐为普通第二路 I2C；建议共享 OLED 的 GPIO5/6 总线，或优先映射到其他合适的空闲 GPIO。
+- 据原理图订正 USB/UART 混淆：USB-C D-/D+ = **GPIO18/GPIO19 原生 USB Serial/JTAG**；GPIO20/GPIO21 = **UART0 RX/TX**。同时订正 Type-C CC1/CC2 为 5.1K 下拉到 GND。
+- `examples/oled_hello_world/platformio.ini` 增加 `ARDUINO_USB_MODE=1` 与 `ARDUINO_USB_CDC_ON_BOOT=1`，使示例中的 Arduino `Serial` 通过 USB-C 原生 CDC 输出。
+- 更新 `boards/esp32-c3-oled/README.md`、`index.md` 与本日志；无新增 TODO。
