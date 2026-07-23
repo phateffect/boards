@@ -14,7 +14,6 @@ date_added: 2026-07-23
 sources:
   - raw/schematics/esp32-c3-oled.pdf
   - raw/c3-oled.ino
-  - raw/c3-boards.improve.20260723.md
 tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 ---
 
@@ -123,4 +122,3 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 
 - `raw/schematics/esp32-c3-oled.pdf`（原理图 PDF，2026-07-23 入库）
 - `raw/c3-oled.ino`（原始 Arduino 示例，2026-07-23 入库）
-- `raw/c3-boards.improve.20260723.md`（实板测试与文档复核反馈：OLED 几何、排针数量、GPIO9 冲突、USB/UART 信号区分）
