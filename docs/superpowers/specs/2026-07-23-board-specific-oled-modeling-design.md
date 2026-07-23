@@ -42,7 +42,8 @@ COG 16-pin 等只对屏体封装有意义、对开发板使用无直接帮助的
 
 ## 验证
 
-- 全仓库不存在指向 `modules/ssd1306-oled` 的引用。
+- 活跃 wiki 页面不存在指向 `modules/ssd1306-oled` 的引用；设计记录与
+  append-only 历史日志可保留这个旧 slug 作为变更背景。
 - 所有相对 Markdown 链接均可解析。
 - board/module frontmatter 的 `references_modules` 与 `used_by` 无残留关系。
 - `index.md`、`boards/README.md`、`modules/README.md` 的数量和分类一致。

@@ -193,3 +193,12 @@
 - 据原理图订正 USB/UART 混淆：USB-C D-/D+ = **GPIO18/GPIO19 原生 USB Serial/JTAG**；GPIO20/GPIO21 = **UART0 RX/TX**。同时订正 Type-C CC1/CC2 为 5.1K 下拉到 GND。
 - `examples/oled_hello_world/platformio.ini` 增加 `ARDUINO_USB_MODE=1` 与 `ARDUINO_USB_CDC_ON_BOOT=1`，使示例中的 Arduino `Serial` 通过 USB-C 原生 CDC 输出。
 - 更新 `boards/esp32-c3-oled/README.md`、`index.md` 与本日志；无新增 TODO。
+
+## [2026-07-23] fix | ESP32-C3-OLED：板专用屏体并回板子页，移除通用 SSD1306 模组建模
+
+- 发现 `modules/ssd1306-oled/` 的抽象层级不正确：SSD1306 只是驱动 IC，不同 SSD1306 面板可能有不同尺寸、分辨率和封装；该页实际只描述本板安装的 Newvision N042-7240TSWEG01-H16。
+- 删除 `modules/ssd1306-oled/README.md`，不再把板载 COG 屏体表示成可跨板复用的通用模组。
+- 将本板所需屏体事实归并进 `boards/esp32-c3-oled/README.md`：具体型号、0.42"、72×40、白色单色、1/40 duty、I2C `0x3C`、GPIO5/6 接线、3.3V 与内部 charge pump。
+- 板子 frontmatter 改为 `references_modules: []`，并将 `raw/c3-oled-screen.pdf` 纳入板子来源。
+- 更新 OLED 示例源码中的事实来源注释，移除对已删除模组页的引用；示例行为与参数不变。
+- 更新 `index.md`、`boards/README.md`、`modules/README.md`：ESP32-C3-OLED 不再标为组合体，模组收录数从 2 个改为 1 个。

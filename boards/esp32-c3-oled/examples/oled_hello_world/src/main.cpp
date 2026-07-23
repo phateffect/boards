@@ -1,6 +1,6 @@
 /*
  * ESP32-C3 OLED 驱动示例（0.42" 72x40 SSD1306，I2C）
- * 屏体事实见 modules/ssd1306-oled 与 raw/c3-oled-screen.pdf：
+ * 屏体事实见 boards/esp32-c3-oled/README.md 与 raw/c3-oled-screen.pdf：
  *   分辨率 72x40（非 128x64），SSD1306，I2C 地址 0x3C，SDA=GPIO5 / SCL=GPIO6。
  * 显示 ESP32-C3 + 计数器 + 堆内存监控。
  */

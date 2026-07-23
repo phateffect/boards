@@ -5,15 +5,16 @@ slug: esp32-c3-oled
 vendor: DIY
 aliases: [ESP32-C3 with OLED]
 chip: ESP32-C3
-references_modules: [ssd1306-oled]
+references_modules: []
 onboard_modules:
-  - SSD1306 72×40 白色单色 OLED, 0.42" (I2C: SCL=GPIO6, SDA=GPIO5, addr 0x3C)
+  - Newvision N042-7240TSWEG01-H16, SSD1306 72×40 白色单色 OLED, 0.42" (I2C: SCL=GPIO6, SDA=GPIO5, addr 0x3C)
   - ME6211C33 LDO 3.3V
   - Power LED (红色)
 date_added: 2026-07-23
 sources:
   - raw/schematics/esp32-c3-oled.pdf
   - raw/c3-oled.ino
+  - raw/c3-oled-screen.pdf
 tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 ---
 
@@ -39,12 +40,20 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 
 | 板载模组 | 占用引脚 | 功能 | 说明 |
 |---|---|---|---|
-| SSD1306 OLED (白色单色, 0.42", 72×40) | GPIO6(SCL), GPIO5(SDA) | I2C | 板载 72×40 单色 OLED 显示屏，详见 [SSD1306 OLED 模组页](../../modules/ssd1306-oled/README.md) |
+| Newvision N042-7240TSWEG01-H16 OLED | GPIO6(SCL), GPIO5(SDA) | I2C | SSD1306 驱动，0.42"、72×40、白色单色，7 位地址 `0x3C` |
 | ME6211C33 LDO | — | 3.3V 稳压 | USB 5V → 3.3V，Max 300mA（据原理图 C1=4.7μF 输入、C2=4.7μF 输出） |
 | Power LED (红色) | VCC 经 R(4.7K) | 电源指示 | 常亮，不可编程 |
 | BOOT 按键 | GPIO9 | BOOT / strapping | 按住 BOOT + 按 RESET 进入下载模式 |
 | RESET 按键 | EN / CHIP_PU | 复位 | 拉低 EN 复位 |
 | USB Type-C | GPIO18(USB D-), GPIO19(USB D+) | USB Serial/JTAG | 原生 USB 供电 + 数据/烧录，无外部 USB-UART 桥；CC1/CC2 各经 5.1K 电阻下拉到 GND |
+
+### 板载 OLED 规格
+
+- 屏体型号：**Newvision N042-7240TSWEG01-H16**；该型号仅描述本板实际安装的屏体，不代表所有 SSD1306 显示屏。
+- 驱动 IC：**SSD1306**；本屏物理分辨率 **72×40**、0.42 英寸、白色单色、1/40 duty。SSD1306 也可用于其他尺寸和分辨率的面板。
+- 板级接口：I2C，7 位地址 **`0x3C`**，SDA=GPIO5、SCL=GPIO6；初始化使用 `Wire.begin(5, 6)`。
+- 板上接 3.3V，屏体所需显示电压由 SSD1306 内部 charge pump 产生。
+- 规格来源：[屏体规格书](../../raw/c3-oled-screen.pdf)。
 
 > ⚠️ 板载 OLED 占用 GPIO5/GPIO6（I2C）。外部 I2C 设备可与 OLED 共用这一路总线（地址不得冲突），也可把另一控制器映射到其他空闲 GPIO，例如 GPIO7/GPIO10。不要把 GPIO9 当作普通、无约束的 SCL 首选：它既是 strapping 引脚，又连接 BOOT 按键；外设下拉、额外上拉/下拉或按下 BOOT 都可能干扰启动或总线时钟。
 
@@ -115,10 +124,10 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
 
 ## 相关页面
 
-- 板载 OLED 模组：[SSD1306 OLED 模组](../../modules/ssd1306-oled/README.md)
 - 同芯片(ESP32-C3) 的板子：_(暂无)_
 
 ## 参考来源
 
 - `raw/schematics/esp32-c3-oled.pdf`（原理图 PDF，2026-07-23 入库）
 - `raw/c3-oled.ino`（原始 Arduino 示例，2026-07-23 入库）
+- `raw/c3-oled-screen.pdf`（Newvision N042-7240TSWEG01-H16 屏体规格书：0.42"、72×40、SSD1306、I2C `0x3C`）

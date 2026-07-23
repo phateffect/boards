@@ -9,7 +9,6 @@
 
 ## 已收录
 
-> 完整目录见 [`../index.md`](../index.md)。当前收录 2 个：
+> 完整目录见 [`../index.md`](../index.md)。当前收录 1 个：
 >
 > - [OV3660 Camera](ov3660-camera/README.md) — 器件事实源，被 [Timer Camera F](../boards/m5stack-timer-cameraf/README.md) 使用
-> - [SSD1306 OLED](ssd1306-oled/README.md) — 0.96" 128×64 OLED 显示模组，被 [ESP32-C3-OLED](../boards/esp32-c3-oled/README.md) 使用
