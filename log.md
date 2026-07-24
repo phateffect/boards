@@ -202,3 +202,7 @@
 - 板子 frontmatter 改为 `references_modules: []`，并将 `raw/c3-oled-screen.pdf` 纳入板子来源。
 - 更新 OLED 示例源码中的事实来源注释，移除对已删除模组页的引用；示例行为与参数不变。
 - 更新 `index.md`、`boards/README.md`、`modules/README.md`：ESP32-C3-OLED 不再标为组合体，模组收录数从 2 个改为 1 个。
+
+## [2026-07-24] update | README 增加「发现问题提 issue」反馈说明
+
+- 在 README.md 末尾新增「## 发现文档有问题？」小节：指引用 `gh issue create --repo phateeffect/boards` 或 GitHub 网页新建 issue，用于反馈内容错漏、过期、矛盾或补充建议。

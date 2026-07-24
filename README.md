@@ -100,3 +100,15 @@ boards/                         # 仓库根
 
 人的活：选材、定向、问好问题、想清楚这意味着什么。
 LLM 的活：剩下的一切。
+
+---
+
+## 发现文档有问题？
+
+wiki 内容有错漏、过期、矛盾，或想补充内容，欢迎提 issue。命令行里：
+
+```bash
+gh issue create --repo phateffect/boards
+```
+
+或直接在 GitHub 上 [新建 issue](https://github.com/phateffect/boards/issues/new)。
