@@ -43,7 +43,7 @@
 
 **The wiki** — LLM 生成并维护的 markdown：`index.md`、`log.md`，以及 `boards/`、`modules/` 下每块板/模组的 `README.md`。**这一层完全归 LLM**——它建页面、来新资料时更新、维护交叉引用、保持全局一致。你读它；LLM 写它。
 
-**The schema** — [`CLAUDE.md`](CLAUDE.md)（pi / Claude Code）或 `AGENTS.md`（Codex）。告诉 LLM wiki 怎么组织、约定是什么、ingest/query/lint 时该做什么。这是让 LLM 变成“靠谱的 wiki 维护者”而非“通用聊天机器人”的关键配置。你和 LLM 会随着使用逐步 co-evolve 这份文件。
+**The schema** — [`CLAUDE.md`](CLAUDE.md) 是完整维护规范；[`AGENTS.md`](AGENTS.md) 是 Codex 的入口文件，指向同一份规范。它们告诉 LLM wiki 怎么组织、约定是什么、ingest/query/lint 时该做什么。这是让 LLM 变成“靠谱的 wiki 维护者”而非“通用聊天机器人”的关键配置。你和 LLM 会随着使用逐步 co-evolve 这份文件。
 
 ## 操作（Operations）
 
@@ -72,6 +72,7 @@
 ```
 boards/                         # 仓库根
 ├── README.md                   # 你在这
+├── AGENTS.md                   # Codex 入口（指向完整 schema）
 ├── CLAUDE.md                   # schema（LLM 维护规则）
 ├── index.md                    # 内容目录（按类别）
 ├── log.md                      # 时间流水账

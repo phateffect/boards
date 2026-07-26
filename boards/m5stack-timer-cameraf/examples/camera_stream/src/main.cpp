@@ -53,7 +53,8 @@ void setup() {
     Serial.begin(115200);
     Serial.println("[timer-cameraf] init OV3660 via esp32-camera");
 
-    esp_err_t err = esp_camera_init(&cam_cfg());
+    camera_config_t config = cam_cfg();
+    esp_err_t err = esp_camera_init(&config);
     Serial.printf("esp_camera_init: %s\n", esp_err_to_name(err));
     if (err != ESP_OK) { Serial.println("camera init failed — 检查 DVP 接线/PSRAM"); return; }
 

@@ -103,6 +103,8 @@ tags: [board, esp32-s3, waveshare, led-matrix, imu]
 - [`examples/matrix_smile/`](examples/matrix_smile/) — 用 **GPIO14** 驱动 8×8 矩阵（Adafruit NeoPixel）：游走亮点 + 红绿蓝整屏循环。
 - [`examples/imu_qmi8658/`](examples/imu_qmi8658/) — 经 I2C（**SDA=GPIO11 / SCL=GPIO12**，地址 `0x6A`）读 QMI8658 加速度+陀螺仪并打印。
 
+> 两个示例的 `platformio.ini` 都使用通用 `esp32-s3-devkitc-1` board id，仅供展示 API。该定义按 8MB Flash 生成镜像，本板实际为 4MB；上板前必须按「特殊说明」坑 1/2 换成自定义 4MB board JSON，并使用 `esptool --no-stub` 烧录。
+
 ## 特殊说明
 
 ### 板级基础

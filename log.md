@@ -206,3 +206,21 @@
 ## [2026-07-24] update | README 增加「发现问题提 issue」反馈说明
 
 - 在 README.md 末尾新增「## 发现文档有问题？」小节：指引用 `gh issue create --repo phateeffect/boards` 或 GitHub 网页新建 issue，用于反馈内容错漏、过期、矛盾或补充建议。
+
+## [2026-07-27] lint | 全库文档一致性检查与既有问题订正
+
+- 新增 `AGENTS.md` 作为 Codex 维护入口，并从根 `README.md` 链接。
+- 订正 OV3660 在 UXGA/JPEG 下的帧率上限为 15fps。
+- 修正 M5StickC Plus2 示例的 PlatformIO board 配置，并移除 blink 源码未使用的 M5Unified Git 依赖。
+- 给 Waveshare ESP32-S3-Matrix 的 IMU 示例补充与 4MB Flash/USB CDC 一致的配置说明。
+- 移除 Matrix 示例中与 ESP32-S3 Arduino variant 冲突的 `LED_BUILTIN` 命令行宏。
+- 修正 Timer Camera F 摄像头示例把临时 `camera_config_t` 取地址导致的 C++ 编译错误。
+- 更新目录日期；本轮新增页面后继续执行断链、frontmatter、索引覆盖与示例编译检查。
+
+## [2026-07-27] ingest | 新增三块开发板、RoverC-Pro 与 Osptek 4.2" BWR TFT
+
+- 新增开发板页：`boards/m5stack-sticks3/`、`boards/m5stack-stopwatch/`、`boards/esp32-s3-supermini/`。
+- 新增模组页：`modules/m5stack-roverc-pro/`、`modules/osptek-ydp420h003-v3/`。
+- RoverC-Pro 记录 StickC Plus2 直插脚位：SCL=G26、SDA=G0、5V、GND；同时记录 StickS3 Grove 改线：共地、由 HAT2 `3V3_L2` 供电、SDA=G9、SCL=G10，且不得同时接入 Grove 5V。
+- Osptek 页面合并屏体规格书、8-pin 转接板原理图与第三方 MIT 驱动；新增可配置引脚的 PlatformIO/ST7306 示例，不与 ESP32-S3 SuperMini 建组合关系。
+- 官方页面归档、原理图、引脚图和上游参考代码均保存于 `raw/`；`raw/` 内既有资料保持不变。

@@ -26,7 +26,7 @@ tags: [module, camera, ov3660, dvp]
 - 有效像素：2048 × 1536（≈3MP）
 - 光学尺寸：1/5"
 - 输出格式：RAW / RGB(565/888) / YUV(422)
-- 帧率：最高约 2048×1536 @ 30fps（降分辨率可更高；受限于 ESP32 DVP 吞吐）
+- 帧率：传感器规格最高 2048×1536 @ **15fps**（1080p @ 20fps、720p @ 45fps；实际还受 ESP32 DVP 吞吐限制）
 - 镜头：模组封装时搭配镜头（如 TimerCam F 为 120° 鱼眼）
 
 ## 核心器件
@@ -79,5 +79,5 @@ tags: [module, camera, ov3660, dvp]
 
 ## 相关页面 / 参考来源
 
-- OmniVision OV3660 datasheet（TODO：存入 `raw/datasheets/`）
+- OmniVision OV3660 preliminary specification v1.3（本次已复核满分辨率为 15fps；TODO：存入 `raw/datasheets/`）
 - esp32-camera 驱动：<https://github.com/espressif/esp32-camera>
