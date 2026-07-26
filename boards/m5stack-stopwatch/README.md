@@ -59,21 +59,27 @@ tags: [board, esp32-s3, m5stack, wearable, amoled, touch]
 
 ## 引脚物理排布
 
-后部 2.54mm 14-pin：
+后部 2.54mm 2×7：
 
 ```text
-Pin 1  3V3_L2    Pin 2  G3
-Pin 3  MUX_IO_1  Pin 4  G4
-Pin 5  MUX_IO_2  Pin 6  G5
-Pin 7  G9        Pin 8  G6
-Pin 9  BOOT/G0   Pin 10 G7
-Pin 11 GND       Pin 12 G8
-Pin 13 NC        Pin 14 BAT
+视角：正对后部插座接触面，按官方 PinMap 的 LEFT/RIGHT 列
+
+ LEFT / 奇数 pin                         RIGHT / 偶数 pin
+ ┌──────────────────────────────────────────────────────┐
+ │  1 3V3_L2    ●                           ●  2 G3     │
+ │  3 MUX_IO_1  ●                           ●  4 G4     │
+ │  5 MUX_IO_2  ●                           ●  6 G5     │
+ │  7 G9        ●                           ●  8 G6     │
+ │  9 BOOT/G0   ●                           ● 10 G7     │
+ │ 11 GND       ●                           ● 12 G8     │
+ │ 13 NC        ●                           ● 14 BAT    │
+ └──────────────────────────────────────────────────────┘
 ```
 
-| 接口 | 类型 | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|---|
-| Grove | HY2.0-4P | GND | 5V | G10 | G11 |
+```text
+Grove / HY2.0-4P（按官方线色与 PinMap 顺序）：
+Pin 1 黑=GND | Pin 2 红=5V | Pin 3 黄=G10 | Pin 4 白=G11
+```
 
 ## 原理图
 

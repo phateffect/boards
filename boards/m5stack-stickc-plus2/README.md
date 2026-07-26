@@ -19,6 +19,7 @@ date_added: 2025-07-21
 sources:
   - raw/datasheets/m5stickc-plus2_pinmap.txt
   - raw/schematics/m5stack-stickc-plus2.pdf
+  - raw/assets/m5stack-stickc-plus2-pin-layout.webp
 tags: [board, esp32, m5stack, wearable, iot]
 ---
 
@@ -74,23 +75,37 @@ tags: [board, esp32, m5stack, wearable, iot]
 
 ## 引脚物理排布
 
+```text
+正面视角：屏幕朝自己、USB-C 在下
+
+        ┌────────────────────────┐
+        │      1.14" LCD         │
+ Btn B  │                        │  Btn A
+        │                        │
+        │ IR/LED  MIC  BUZZER    │
+        │ Btn C/PWR       USB-C  │
+        └────────────────────────┘
+
+背面视角：背面丝印正读、USB-C 与 Grove 在下
+
+  HAT 8-pin（自左向右）：
+  ┌────┬─────┬─────┬─────────┬────┬─────┬─────┬─────┐
+  │GND │5V ↑ │ G26 │ G36/G25 │ G0 │ BAT │ 3V3 │5V ↓ │
+  └────┴─────┴─────┴─────────┴────┴─────┴─────┴─────┘
+                          ┌──────────────┐
+  Grove / HY2.0-4P（下端）│ GND  5V G32 G33 │
+                          └──────────────┘
 ```
-        ┌───────────────────────┐
-  ┌──────┤      1.14" LCD        ├──────┐
-  │ BtnA │   (135×240 ST7789V2)  │ BtnB │
-  │ (M5) └───────────────────────┘(side)│
-  │  USB-C(CH9102)         Grove(Port A)│
-  │   G0 G25 G26 G36  3V3 5V GND        │
-  │   ●  ●   ●   ●    ●   ●  ●  ← HAT   │
-  └─────────────────────────────────────┘
-  视角：屏幕朝自己、USB-C 在左下；HAT 焊盘在板子底边
-  Grove(PORT.CUSTOM) = G32(SDA) / G33(SCL) / 5V / GND
-  红 LED + IR 共用 G19；电源键=C(G35)；HOLD=G4；电池电压检测=G38
-```
+
+- `G36/G25` 是官方背面丝印在**同一个 HAT 物理位**上的写法，不应拆成两个插针。
+- HAT 两个 5V 位以丝印箭头区分方向（`5V ↑` / `5V ↓`）；使用前按具体 HAT 的供电方向核对。
+- Grove/PORT.CUSTOM：G32=SDA、G33=SCL。
+- 红 LED 与 IR 共用 G19；电源键 C=G35；HOLD=G4；电池检测=G38。
 
 ## 原理图
 
 - [原理图 PDF v0.5（已入库）](../../raw/schematics/m5stack-stickc-plus2.pdf) — 3 页：主控+外设 / 电源 / 传感器。本页占用引脚表据此 + 官方文档交叉核实。
+- [官方背面接口图](../../raw/assets/m5stack-stickc-plus2-pin-layout.webp) — 页面已将其中全部脚位转录为 ASCII。
 
 ## 示例代码
 
@@ -130,4 +145,5 @@ tags: [board, esp32, m5stack, wearable, iot]
 
 - `raw/datasheets/m5stickc-plus2_pinmap.txt`（官方 Plus2 文档文本快照，2025-07-21）
 - `raw/schematics/m5stack-stickc-plus2.pdf`（官方原理图 v0.5，2025-07-21 入库）
+- `raw/assets/m5stack-stickc-plus2-pin-layout.webp`（官方背面接口图，2026-07-27 入库）
 - 官方文档：<https://docs.m5stack.com/en/core/M5StickC%20PLUS2>

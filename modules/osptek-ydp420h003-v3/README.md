@@ -80,13 +80,36 @@ tags: [module, display, tft, reflective, bwr, st7306, spi]
 
 ## 引脚物理排布
 
-转接板 1×8 排针按原理图 Pin1→Pin8：
+转接板 1×8 排针，按原理图 Pin1→Pin8：
 
 ```text
-1 VCI | 2 GND | 3 SCLK | 4 SDI | 5 RES | 6 DC | 7 CS | 8 TE
+视角：沿排针编号从 Pin 1 端看向 Pin 8 端
+
+Pin 1                                                  Pin 8
+  ▼                                                       ▼
+┌─────┬─────┬──────┬─────┬─────┬────┬────┬────┐
+│ VCI │ GND │ SCLK │ SDI │ RES │ DC │ CS │ TE │
+└─────┴─────┴──────┴─────┴─────┴────┴────┴────┘
 ```
 
 转接板以 `R1=0Ω` 把 IOVCC 与 VCI 相连，默认应统一使用 **3.3V**。只有需要独立 1.8V I/O 时才移除 R1，并分别满足 IOVCC/VCI 的电压范围。
+
+屏体 24-pin FPC 按规格书编号：
+
+```text
+Pin 1 端
+  │
+  ├─  1 NC       7 NC       13 LCD_SCLK   19 NC
+  ├─  2 NC       8 NC       14 LCD_SDI    20 VIV (output)
+  ├─  3 NC       9 TE       15 IOVCC      21 AVDD (output)
+  ├─  4 NC      10 LCD_RES  16 VCI        22 VNV (output)
+  ├─  5 VCC(I-O)  11 LCD_D/C  17 GND      23 NC
+  └─  6 NC      12 LCD_CS   18 VGH(output)24 VGL (output)
+                                                   │
+                                                Pin 24 端
+```
+
+> FPC 接触面朝向应以屏体 FPC 的 Pin 1 标记和转接板连接器为准；规格书未给出足以安全区分“触点朝上/朝下”的装配视图，本页不作猜测。
 
 ## 示例代码
 

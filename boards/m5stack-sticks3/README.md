@@ -62,22 +62,29 @@ tags: [board, esp32-s3, m5stack, wearable, lcd]
 
 ## 引脚物理排布
 
-HAT2 16-pin（按官方 PinMap 编号）：
+HAT2 16-pin：
 
 ```text
-Pin 1  GND       Pin 2  G5
-Pin 3  EXT_5V    Pin 4  G4
-Pin 5  BOOT      Pin 6  G6
-Pin 7  G1        Pin 8  G7
-Pin 9  G8        Pin 10 G43
-Pin 11 BAT       Pin 12 G44
-Pin 13 3V3_L2    Pin 14 G2
-Pin 15 5V_IN     Pin 16 G3
+视角：正对 HAT2 插座接触面，按官方 PinMap 的 LEFT/RIGHT 列
+Pin 1/2 为同一端，随后向 Pin 15/16 方向排列。
+
+ LEFT / 奇数 pin                       RIGHT / 偶数 pin
+ ┌────────────────────────────────────────────────────┐
+ │  1 GND       ●                         ●  2 G5     │
+ │  3 EXT_5V    ●                         ●  4 G4     │
+ │  5 BOOT      ●                         ●  6 G6     │
+ │  7 G1        ●                         ●  8 G7     │
+ │  9 G8        ●                         ● 10 G43    │
+ │ 11 BAT       ●                         ● 12 G44    │
+ │ 13 3V3_L2    ●                         ● 14 G2     │
+ │ 15 5V_IN     ●                         ● 16 G3     │
+ └────────────────────────────────────────────────────┘
 ```
 
-| 接口 | 类型 | 1 | 2 | 3 | 4 |
-|---|---|---|---|---|---|
-| Grove | HY2.0-4P | GND | 5V | G9（黄） | G10（白） |
+```text
+Grove / HY2.0-4P（按官方线色与 PinMap 顺序）：
+Pin 1 黑=GND | Pin 2 红=5V | Pin 3 黄=G9 | Pin 4 白=G10
+```
 
 ## 原理图
 

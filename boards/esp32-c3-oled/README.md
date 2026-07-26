@@ -103,6 +103,8 @@ tags: [board, esp32-c3, oled, ssd1306, i2c, spi, diy]
     右列(顶→底): 10, 9(SCL), 8(SDA), 7, 6(OLED), 5(OLED), 4(MOSI), 3(SS)
 ```
 
+> 板上没有为两侧排针印连续 Pin 1–16 编号，因此本页按**可复现的观察方向 + 丝印顺序**记录，不自行创造 Pin 编号。USB-C、BOOT、RST 的相对位置也包含在图中。
+
 ## 原理图
 
 - [原理图 PDF（已入库）](../../raw/schematics/esp32-c3-oled.pdf) — 含 USB Type-C、ME6211C33 LDO、ESP32-C3 QFN32、SSD1306 OLED 模块、BOOT/RESET 按键、Power LED。

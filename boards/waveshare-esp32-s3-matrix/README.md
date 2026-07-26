@@ -93,6 +93,13 @@ tags: [board, esp32-s3, waveshare, led-matrix, imu]
    * GPIO3 = ESP32-S3 strapping 引脚（上电电平影响启动，外部用注意）
 ```
 
+```text
+附加焊盘：DOUT 位于右侧排针 GPIO37 焊盘内侧，用于把板载第 64 颗
+WS2812 的数据输出级联到下一块灯板；它不是 GPIO37 网络。
+```
+
+> 板上两侧排针没有连续 Pin 1–20 丝印，因此按上图“LED 面、USB-C 朝上”的位置顺序识别，不自行编号。
+
 ## 原理图
 
 - [原理图 PDF（已入库）](../../raw/schematics/waveshare-esp32-s3-matrix.pdf) — 单页：ESP32-S3 / QMI8658(U67) / 64× WS2812 链 / ME6217 LDO / USB-C。本页 QMI8658 引脚即据此核实。

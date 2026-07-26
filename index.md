@@ -1,6 +1,6 @@
 # Index
 
-> 内容目录。每次 ingest 后更新。最后更新：**2026-07-27**（新增 StickS3、StopWatch、ESP32-S3 SuperMini、RoverC-Pro 与 Osptek 4.2" BWR TFT）
+> 内容目录。每次 ingest 后更新。最后更新：**2026-07-27**（新增 ESP32-S3-AI-Board，并补齐全库纯文本物理引脚排布）
 
 ## 开发板（boards）
 
@@ -10,6 +10,7 @@
 | m5stack-sticks3 | M5Stack StickS3 | M5Stack | ESP32-S3-PICO-1-N8R8 | LCD/IMU/音频/红外/M5PM1 | 否 | [→](boards/m5stack-sticks3/README.md) |
 | m5stack-stopwatch | M5Stack StopWatch | M5Stack | ESP32-S3R8 | AMOLED/触摸/IMU/RTC/音频/振动 | 否 | [→](boards/m5stack-stopwatch/README.md) |
 | esp32-s3-supermini | ESP32-S3 SuperMini | generic | ESP32-S3FH4R2 | WS2812+红色 LED/锂电充电 | 否 | [→](boards/esp32-s3-supermini/README.md) |
+| esp32-s3-ai-board | ESP32-S3-AI-Board | OpenJumper | ESP32-S3-WROOM-1-N16R8 | ST7789/数字麦克风/I2S 音频/WS2812/锂电充电 | 否 | [→](boards/esp32-s3-ai-board/README.md) |
 | waveshare-esp32-s3-matrix | ESP32-S3-Matrix | Waveshare | ESP32-S3 | 8×8 WS2812 矩阵 | 否 | [→](boards/waveshare-esp32-s3-matrix/README.md) |
 | m5stack-timer-cameraf | Timer Camera F | M5Stack | ESP32-D0WDQ6-V3 | OV3660 摄像头/RTC/LED | **是（+OV3660）** | [→](boards/m5stack-timer-cameraf/README.md) |
 | esp32-c3-oled | ESP32-C3-OLED | DIY | ESP32-C3 | Newvision N042-7240TSWEG01-H16（SSD1306 0.42" 72×40）/ LDO / LED；16-pin / 13 GPIO signals | 否 | [→](boards/esp32-c3-oled/README.md) |
@@ -26,13 +27,14 @@
 
 ### 按主控芯片
 - **ESP32**（含 PICO / D0WDQ6 变体）：[StickC Plus2](boards/m5stack-stickc-plus2/README.md)、[Timer Camera F](boards/m5stack-timer-cameraf/README.md)
-- **ESP32-S3**：[StickS3](boards/m5stack-sticks3/README.md)、[StopWatch](boards/m5stack-stopwatch/README.md)、[ESP32-S3 SuperMini](boards/esp32-s3-supermini/README.md)、[ESP32-S3-Matrix](boards/waveshare-esp32-s3-matrix/README.md)
+- **ESP32-S3**：[StickS3](boards/m5stack-sticks3/README.md)、[StopWatch](boards/m5stack-stopwatch/README.md)、[ESP32-S3 SuperMini](boards/esp32-s3-supermini/README.md)、[ESP32-S3-AI-Board](boards/esp32-s3-ai-board/README.md)、[ESP32-S3-Matrix](boards/waveshare-esp32-s3-matrix/README.md)
 - **ESP32-C3**：[ESP32-C3-OLED](boards/esp32-c3-oled/README.md)
 
 ### 按厂商
 - **M5Stack**：[StickC Plus2](boards/m5stack-stickc-plus2/README.md)、[StickS3](boards/m5stack-sticks3/README.md)、[StopWatch](boards/m5stack-stopwatch/README.md)、[Timer Camera F](boards/m5stack-timer-cameraf/README.md)、[RoverC-Pro](modules/m5stack-roverc-pro/README.md)
 - **Waveshare**：[ESP32-S3-Matrix](boards/waveshare-esp32-s3-matrix/README.md)
 - **Osptek**：[YDP420H003-V3](modules/osptek-ydp420h003-v3/README.md)
+- **OpenJumper**：[ESP32-S3-AI-Board](boards/esp32-s3-ai-board/README.md)
 - **DIY**：[ESP32-C3-OLED](boards/esp32-c3-oled/README.md)
 - **generic**：[ESP32-S3 SuperMini](boards/esp32-s3-supermini/README.md)
 

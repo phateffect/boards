@@ -16,6 +16,7 @@ date_added: 2025-07-21
 sources:
   - raw/datasheets/m5stack-timercam-f_pinmap.txt
   - raw/datasheets/m5stack-timercam-f_library-power.txt
+  - raw/assets/m5stack-timer-cameraf-port-layout.jpg
 tags: [board, esp32, m5stack, camera, low-power, combo]
 ---
 
@@ -91,23 +92,32 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 
 ## 引脚物理排布
 
-```
+```text
+正面视角：镜头面朝自己，镜头在上、USB-C/HY2.0-4P 在下
+
    ┌─────────────────────────────────┐
-   │  ◉ 镜头 (OV3660, 120° 鱼眼)      │
+   │       ◉ OV3660 120° 鱼眼        │
    │                                 │
-   │   ESP32-D0WDQ6-V3  + 8MB PSRAM  │
-   │   BM8563 RTC        270mAh 电池 │
-   │   状态LED(G2)                   │
+   │  RESET                    LED   │
    │                                 │
-   │   [PWR]   [RST]        USB-C    │
+   │  PWR/WAKE                       │
+   │          USB-C   HY2.0-4P       │
    └─────────────────────────────────┘
-        底部 HY2.0-4P： SCL(G13) SDA(G4) 5V GND
-   视角：镜头朝上、USB-C 在下
+
+背面视角：背面标签正读，HY2.0-4P 插座在下
+
+                  Ext.Port 丝印（左→右）
+             ┌──────┬──────┬──────┬────────┐
+             │ GND  │  5V  │G4/SDA│G13/SCL │
+             └──────┴──────┴──────┴────────┘
 ```
+
+> 官方背面标签同时给出颜色提示：GND=黑、5V=红、G4/SDA=白、G13/SCL=黄。ASCII 已完整转录，图片仅用于核对朝向。
 
 ## 原理图
 
 - [官方 TimerCamera-F 原理图（M5 官网页）](https://docs.m5stack.com/en/unit/timercam_f)（Schematics PDF 1/2）
+- [官方背面 Ext.Port 图](../../raw/assets/m5stack-timer-cameraf-port-layout.jpg)
 - BM8563 接线已据原理图核实；TODO：把原理图 PDF 归档到 `raw/schematics/`。
 
 **BM8563 引脚（原理图）：** pin1 OSCI→GND · pin2 OSCO→GND · **pin3 ~INT→`RTC_ALM`（电源开关电路）** · pin4 VSS→GND · pin5 SDA→GPIO12 · pin6 SCL→GPIO14 · pin7 CLKOUT→NC · pin8 VDD→VBAT-IN
@@ -136,6 +146,7 @@ tags: [board, esp32, m5stack, camera, low-power, combo]
 
 - `raw/datasheets/m5stack-timercam-f_pinmap.txt`（官方 TimerCam-F 页面文本快照，2025-07-21）
 - `raw/datasheets/m5stack-timercam-f_library-power.txt`（官方库 Power_Class / 唤醒示例摘录，2025-07-21；据此核实 HOLD=G33 / LED=G2 / BAT_ADC=G38 / 唤醒机制）
+- `raw/assets/m5stack-timer-cameraf-port-layout.jpg`（官方背面接口图，2026-07-27）
 - BM8563 引脚接线：据官方原理图（用户提供，2025-07-21）
 - 官方文档：<https://docs.m5stack.com/en/unit/timercam_f> · 库：<https://github.com/m5stack/TimerCam-arduino>
 - TODO：把官方原理图 PDF、OV3660 datasheet 归档到 `raw/`

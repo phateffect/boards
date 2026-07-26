@@ -224,3 +224,18 @@
 - RoverC-Pro 记录 StickC Plus2 直插脚位：SCL=G26、SDA=G0、5V、GND；同时记录 StickS3 Grove 改线：共地、由 HAT2 `3V3_L2` 供电、SDA=G9、SCL=G10，且不得同时接入 Grove 5V。
 - Osptek 页面合并屏体规格书、8-pin 转接板原理图与第三方 MIT 驱动；新增可配置引脚的 PlatformIO/ST7306 示例，不与 ESP32-S3 SuperMini 建组合关系。
 - 官方页面归档、原理图、引脚图和上游参考代码均保存于 `raw/`；`raw/` 内既有资料保持不变。
+
+## [2026-07-27] ingest | ESP32-S3-AI-Board 与综合自检示例
+
+- 新增 `boards/esp32-s3-ai-board/`：ESP32-S3-WROOM-1-N16R8、1.9" 170×320 ST7789、数字 I2S 麦克风、I2S 音频功放、WS2812、按键、USB 与锂电供电。
+- 从产品页原理图核实 LCD、麦克风、功放、按键、USB、WS2812、双排 GPIO、I2C/UART/BAT/SPK 接口；产品页背面图把 G42 误画成第二个 G40，本页按正面图与原理图订正。
+- 新增 `examples/board_self_test/`，分阶段测试 LCD、RGB、BOOT/VOL±、麦克风电平与扬声器测试音；可用 build flags 分别关闭。
+- 产品页 PDF、正反面引脚图、标注布局图和单页原理图已归档到 `raw/`。
+
+## [2026-07-27] update | 全库硬件页补齐纯文本物理引脚排布
+
+- 审查全部 board/module 页面，要求 ASCII 或 Markdown 表能够独立表达连接器顺序、观察方向与 Pin 1；图片只作为来源佐证。
+- 订正 ESP32-S3 SuperMini 背面焊盘由旧文字的 12+8 错列为引脚图实际的左右 10+10。
+- M5StickC Plus2 按官方背面丝印转录 8-pin HAT，其中 `G36/G25` 为同一物理位；Timer Camera F 转录 Ext.Port 左→右顺序。
+- StickS3、StopWatch 改为明确 LEFT/RIGHT 与奇偶 Pin 的双排 ASCII；RoverC-Pro 补车体接口相对位置。
+- Osptek 补 8-pin 转接板和 24-pin FPC 纯文本排布；OV3660 明确无通用 FPC 排布，并给出载板边界。

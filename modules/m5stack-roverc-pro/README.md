@@ -64,11 +64,26 @@ tags: [module, m5stack, rover, mecanum, i2c, hat]
 
 ## 引脚物理排布
 
-| 接口 | 类型 | 信号 |
+```text
+俯视：元件面朝上，夹爪/车头朝下
+
+                 车尾
+          ┌──── Stick HAT 插座 ────┐
+  Grove-L │                        │ Grove-R
+   I2C  ┌─┤   STM32F030 + L9110S   ├─┐ I2C
+        │ │                        │ │
+ Servo1 │ │                        │ │ Servo2
+        └─┤     [ON/OFF 开关]      ├─┘
+          └──────── 车头/夹爪 ─────┘
+```
+
+| 接口 | 物理/信号顺序 | 说明 |
 |---|---|---|
-| Stick HAT | 直插 | SCL=G26、SDA=G0、5V、GND（以 StickC Plus2 为例） |
-| Grove I2C ×2 | HY2.0-4P | SCL、SDA、5V、GND |
-| Servo ×2 | 3-pin | PWM、电源、GND |
+| Stick HAT | G26/SCL · G0/SDA · 5V · GND | 只列 RoverC-Pro 实际使用的四个网络 |
+| Grove-L / Grove-R | SCL · SDA · 5V · GND | 两个并联 I2C 口；官方 PinMap 列顺序 |
+| Servo1 / Servo2 | PWM · 电源 · GND | 两个 3-pin 舵机口；插接前按板上丝印核对信号侧 |
+
+> 官方产品图没有为 Grove/Servo 连接器标 Pin 1 视角，因此本页不虚构编号；上图仍完整表达各接口在车体上的相对位置和已确认信号集合。
 
 ## 示例代码
 
