@@ -1,0 +1,985 @@
+# M5Stack CoreS3 官方文档页面文本快照（含 PinMap / M-Bus / I2C 地址表）
+# URL: https://docs.m5stack.com/en/core/CoreS3
+# 抓取日期: 2026-08-20 （Nuxt SPA payload 提取的正文文本；作为 Stack-chan K151 主控侧的佐证资料）
+
+
+
+## CoreS3
+
+SKU:K128
+
+## Description
+
+CoreS3 is the third-generation main controller of the M5Stack development kit series, based on the ESP32-S3 solution featuring a dual-core Xtensa LX7 processor running at 240 MHz with built-in Wi-Fi. It integrates 16MB Flash and 8MB PSRAM. Programs can be downloaded through the USB Type-C port, and OTG & CDC functions are supported for connecting USB devices and flashing firmware.
+The front houses a 2.0-inch capacitive-touch IPS panel protected by high-strength glass. Below the screen is a 0.3MP GC0308 camera paired with an LTR-553ALS-WA proximity sensor. Power is managed by an AXP2101 PMU and four power-path control circuits, delivering a low-power design. Onboard sensors include a six-axis IMU BMI270 and a magnetometer BMM150. Additional peripherals comprise a microSD slot and a BM8563 RTC, enabling precise time-keeping plus sleep/timed-wake-up functions.
+For audio, a 16-bit I2S amplifier AW88298 drives the built-in 1W speaker, while an ES7210 audio codec provides dual-microphone input. Independent POWER and RESET (RST) buttons are located on the side; long-pressing the RESET button enters download mode via a self-built delay circuit.
+The kit ships with a DinBase for DIN-rail, wall-mount or screw mounting. It can be powered by an external DC 12V (9 ~ 24V) supply or an internal 500mAh battery. Multiple proto areas on the DinBase ease DIY expansion.
+Ideal for IoT development, DIY projects, smart-home control systems and industrial automation control systems.
+
+## Tutorial
+
+    
+         Arduino IDE 
+      
+         Arduino IDE 
+         This tutorial explains how to program and control CoreS3 using Arduino IDE. 
+      
+    
+    
+         UiFlow2 
+      
+         UiFlow2 
+         This tutorial shows how to control CoreS3 via the UiFlow2 graphical programming platform. 
+      
+    
+    
+         Home Assistant 
+      
+         Home Assistant 
+         This tutorial describes how to connect CoreS3 to Home Assistant. 
+      
+    
+    
+         CoreS3 Xiaoling Voice Assistant 
+      
+         CoreS3 Xiaoling Voice Assistant 
+         This tutorial will introduce how to use the CoreS3 controller to burn the Xiaoling Voice Assistant firmware via M5Burner and build a personal voice assistant application. 
+      
+    
+    
+         CoreS3 ESP-Claw Firmware Flashing 
+      
+         CoreS3 ESP-Claw Firmware Flashing 
+         This tutorial explains how to flash the ESP-Claw firmware onto the CoreS3, enabling users to quickly configure their CoreS3 as an intelligent terminal capable of AI interaction, hardware programming, and automation control. 
+      
+    
+
+## Features
+
+- ESP32-based development, Wi-Fi, 16 MB Flash, 8 MB PSRAM
+
+- Built-in camera, proximity sensor, speaker, power-indicator LED, RTC, I2S amplifier, dual microphones, capacitive touch screen, power button, reset button, gyroscope
+
+- microSD slot
+
+- High-strength glass panel
+
+- Supports OTG & CDC functions
+
+- AXP2101 power management, low-power design
+
+- Development Platform
+
+- UiFlow2
+
+- Arduino IDE
+
+- ESP-IDF
+
+- PlatformIO
+
+## Includes
+
+- 1 × CoreS3
+
+- 1 × DinBase
+
+- 1 × Hex Key L-Shape 2.5 mm (For M3 Screw)
+
+- 4 × Screw Buckle
+
+- 1 × Rail-mount Base Buckle
+
+## Applications
+
+- IoT development
+
+- DIY project development
+
+- Smart-home control systems
+
+- Industrial automation control systems
+
+## Specifications
+ | 
+| 
+ | Specification
+ | Parameter
+
+| 
+ | SoC
+ | ESP32-S3 @ Xtensa® 32-bit LX7 dual-core processor, clock frequency 240MHz
+
+| 
+ | Flash
+ | 16MB
+
+| 
+ | PSRAM
+ | 8MB Quad
+
+| 
+ | Wi-Fi
+ | 2.4 GHz Wi-Fi
+
+| 
+ | Touch IPS LCD
+ | 2.0" @320 × 240 ILI9342C
+
+| 
+ | Camera
+ | GC0308 0.3MP
+
+| 
+ | Proximity Sensor
+ | LTR-553ALS-WA
+
+| 
+ | Power Management
+ | AXP2101
+
+| 
+ | 6-axis IMU
+ | BMI270
+
+| 
+ | 3-axis Magnetometer
+ | BMM150
+
+| 
+ | RTC
+ | BM8563
+
+| 
+ | Speaker
+ | 16-bit I2S amplifier AW88298 @1W
+
+| 
+ | Audio Codec
+ | ES7210, dual-microphone input
+
+| 
+ | Product Size
+ | Whole set (CoreS3+DinBase): 69.0 × 54.0 × 31.5mm 
+ Main unit (CoreS3): 54.0 × 54.0 × 15.5mm
+
+| 
+ | Product Weight
+ | 72.7g
+
+| 
+ | Package Size
+ | 105.6 × 66.0 × 35.3mm
+
+| 
+ | Gross Weight
+ | 101.8g
+
+## Learn
+
+     
+         BMM150 Magnetic Interference 
+          Products containing magnets may interfere with the BMM150 magnetic sensor, resulting in abnormal readings. When used with M5 controllers that have magnets, remove the magnets and avoid placing the BMM150 near strong magnetic fields.
+     
+
+## Download Mode
+
+Press and hold the RESET button for 3 seconds. When the green indicator LED turns on, release the button. After release, the green indicator LED turns off, indicating that the device has entered download mode.
+
+## Power On/Off
+
+- Power-on: single-click the left POWER button
+
+- Power-off: long-press the left POWER button for 6 s
+
+- Reset: single-click the bottom RST button
+
+## IMU Triaxial Direction Schematic Diagram
+
+## Power Management
+
+CoreS3 uses the AXP2101 PMU together with the AW9523B IO expander to control power input/output directions. Refer to the pin states of BUS_OUT_EN and USB_OTG_EN in the figure below and check the example code in CoreS3 Power Manager Example。
+
+## Certifications
+
+- CE/MIC/FCC/SAR
+
+## Schematics
+
+- CoreS3 Schematics PDF
+
+- Base DIN Schematics PDF
+
+## PinMap
+
+## LCD Screen
+
+LCD Pixels: 320x240 | 
+| 
+ | ESP32-S3
+ | G37
+ | G36
+ | G3
+ | G35
+
+| 
+ | ILI9342C
+ | MOSI
+ | SCK
+ | CS
+ | DC
+
+ | 
+| 
+ | AW9523B (0x58)
+ | P1_1
+
+| 
+ | ILI9342C
+ | RST
+
+ | 
+| 
+ | AXP2101 (0x34)
+ | DLDO1
+ | LX1
+
+| 
+ | ILI9342C
+ | BL
+ | PWR
+
+## microSD
+
+TF Card Maximum Supported Capacity: 16GB | 
+| 
+ | ESP32-S3
+ | G35
+ | G37
+ | G36
+ | G4
+
+| 
+ | TF Card
+ | MISO
+ | MOSI
+ | SCK
+ | CS
+
+## Camera & Proximity Sensor LTR-553ALS-WA
+ | 
+| 
+ | ESP32-S3
+ | G12
+ | G11
+ | G45
+ | G46
+ | G38
+
+| 
+ | GC0308 (0x21)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+ | CAM_PCLK
+ | CAM_VSYNC
+ | CAM_HREF
+
+| 
+ | LTR-553ALS-WA (0x23)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+ | 
+ | 
+ | 
+
+ | 
+| 
+ | AW9523B
+ | P1_0
+
+| 
+ | GC0308
+ | CAM_RST
+
+The LTR-553ALS-WA proximity sensor and the camera are integrated on one ribbon cable, and use I2C for communication. Please refer to the table above for detailed communication addresses.
+
+## GC0308
+ | 
+| 
+ | 接口
+ | Camera Pin
+ | ESP32-S3
+
+| 
+ | SCCB Clock
+ | SIOC
+ | G11
+
+| 
+ | SCCB Data
+ | SIOD
+ | G12
+
+| 
+ | System Clock
+ | XCLK
+ | -1
+
+| 
+ | Vertical Sync
+ | VSYNC
+ | G46
+
+| 
+ | Horizontal Reference
+ | HREF
+ | G38
+
+| 
+ | Pixel Clock
+ | PCLK
+ | G45
+
+| 
+ | Pixel Data Bit 0
+ | D0
+ | G39
+
+| 
+ | Pixel Data Bit 1
+ | D1
+ | G40
+
+| 
+ | Pixel Data Bit 2
+ | D2
+ | G41
+
+| 
+ | Pixel Data Bit 3
+ | D3
+ | G42
+
+| 
+ | Pixel Data Bit 4
+ | D4
+ | G15
+
+| 
+ | Pixel Data Bit 5
+ | D5
+ | G16
+
+| 
+ | Pixel Data Bit 6
+ | D6
+ | G48
+
+| 
+ | Pixel Data Bit 7
+ | D7
+ | G47
+
+| 
+ | Camera Reset
+ | RESET
+ | -1
+
+| 
+ | Camera Power Down
+ | PWDN
+ | -1
+
+## CAP.TOUCH
+ | 
+| 
+ | ESP32-S3
+ | G12
+ | G11
+
+| 
+ | FT6336U (0x38)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+ | 
+| 
+ | AW9523B
+ | P0_0
+ | P1_2
+
+| 
+ | FT6336U
+ | TOUCH_RST
+ | TOUCH_INT
+
+## Microphone & Amplifier
+ | 
+| 
+ | ESP32-S3
+ | G12
+ | G11
+ | G34
+ | G33
+ | G13
+ | G14
+ | G0
+
+| 
+ | ES7210 (0x40)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+ | I2S_BCK
+ | I2S_WCK
+ | 
+ | I2S_DATI
+ | I2S_MCLK
+
+| 
+ | AW88298 (0x36)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+ | I2S_BCK
+ | I2S_WCK
+ | I2S_DATO
+ | 
+ | 
+
+ | 
+| 
+ | AW9523B
+ | P0_2
+ | P1_3
+
+| 
+ | AW88298
+ | AW_RST
+ | AW_INT
+
+## AXP Power Indicator Light
+ | 
+| 
+ | AXP2101
+ | AXP_CHG_LED
+
+| 
+ | Red LED
+ | RTC_VDD
+
+## RTC
+ | 
+| 
+ | ESP32-S3
+ | G12
+ | G11
+
+| 
+ | BM8563 (0x51)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+ | 
+| 
+ | AXP2101
+ | IRQ
+
+| 
+ | BM8563
+ | AXP_WAKEUP
+
+## IMU (3-axis Gyroscope + 3-axis Accelerometer + 3-axis Magnetometer)
+ | 
+| 
+ | ESP32-S3
+ | G12
+ | G11
+
+| 
+ | BMI270 (0x69)
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+## Internal I2C Connection
+ | 
+| 
+ | ESP32-S3
+ | G12
+ | G11
+
+| 
+ | BMI270
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+| 
+ | AXP2101
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+| 
+ | BM8563
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+| 
+ | ES7210
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+| 
+ | AW88298
+ | I2C_SYS_SDA
+ | I2C_SYS_SCL
+
+## BMM150
+ | 
+| 
+ | BMI270
+ | BMI270_ASDx
+ | BMI270_ASCx
+
+| 
+ | BMM150 (0x10)
+ | BMM_SDA
+ | BMM_SCL
+
+     
+         BMM150 Mounted on BMI270 
+          Connected through BMI270's Sensor Hub auxiliary I2C interface to access BMM150 and achieve unified 9-axis sensor data acquisition.
+     
+
+## HY2.0-4P
+ | 
+| 
+ | HY2.0-4P
+ | Black
+ | Red
+ | Yellow
+ | White
+
+| 
+ | PORT.A
+ | GND
+ | 5V
+ | G2
+ | G1
+
+| 
+ | PORT.B
+ | GND
+ | 5V
+ | G9
+ | G8
+
+| 
+ | PORT.C
+ | GND
+ | 5V
+ | G17
+ | G18
+
+## CoreS3 M5-Bus Diagram
+ | 
+| 
+ | FUNC
+ | PIN
+ | LEFT
+ | RIGHT
+ | PIN
+ | FUNC
+
+| 
+ | 
+ | GND
+ | 1
+ | 2
+ | G10
+ | ADC
+
+| 
+ | 
+ | GND
+ | 3
+ | 4
+ | G8
+ | PB_IN
+
+| 
+ | 
+ | GND
+ | 5
+ | 6
+ | RST
+ | EN
+
+| 
+ | MOSI
+ | G37
+ | 7
+ | 8
+ | G5
+ | GPIO
+
+| 
+ | MISO
+ | G35
+ | 9
+ | 10
+ | G9
+ | PB_OUT
+
+| 
+ | SCK
+ | G36
+ | 11
+ | 12
+ | 3V3
+ | 
+
+| 
+ | RXD0
+ | G44
+ | 13
+ | 14
+ | G43
+ | TXD0
+
+| 
+ | PC_RX
+ | G18
+ | 15
+ | 16
+ | G17
+ | PC_TX
+
+| 
+ | Int SDA
+ | G12
+ | 17
+ | 18
+ | G11
+ | Int SCL
+
+| 
+ | PORT.A SDA
+ | G2
+ | 19
+ | 20
+ | G1
+ | PORT.A SCL
+
+| 
+ | GPIO
+ | G6
+ | 21
+ | 22
+ | G7
+ | GPIO
+
+| 
+ | I2S_DOUT
+ | G13
+ | 23
+ | 24
+ | G0
+ | I2S_LRCK
+
+| 
+ | 
+ | HVIN(Base DIN)
+ | 25
+ | 26
+ | G14
+ | I2S_DIN
+
+| 
+ | 
+ | HVIN(Base DIN)
+ | 27
+ | 28
+ | 5V
+ | 
+
+| 
+ | 
+ | HVIN(Base DIN)
+ | 29
+ | 30
+ | BAT
+ | 
+
+## Core Series PinMap Comparison
+
+## Model Size
+
+- Cores3 Model Size DXF
+
+## PCB
+
+- Cores3 PcbDoc
+
+     
+         Description
+         This file can be used for DIY adaptation of CoreS3 Module Type A expansion modules.
+     
+
+## Structure
+
+- CoreS3 Structure Files
+
+## Datasheets
+
+- ESP32-S3
+
+- LTR-553ALS-WA
+
+- GC0308
+
+- ES7210
+
+- BMM150
+
+- BMI270
+
+- BM8563
+
+- AXP2101
+
+- AW88298
+
+- AW9523B
+
+## Softwares
+
+## Quick Start
+
+- CoreS3 OpenAI Voice Assistant
+
+- CoreS3 XiaoZhi Voice Assistant
+
+- CoreS3 HA Voice Assistant
+
+- CoreS3 ESP-Claw Firmware Flashing
+
+## Arduino
+
+- CoreS3 Arduino Quick Start
+
+- CoreS3 Arduino Library
+
+- CoreS3 Arduino M5Unified Library
+
+- CoreS3 Arduino M5GFX Library
+
+## UiFlow2
+
+- CoreS3 UiFlow2 Quick Start
+
+- CoreS3 UiFlow2 Book
+
+## PlatformIO
+
+- CoreS3 Factory Firmware
+
+        
+          
+            
+[env:m5stack-cores3]
+platform = espressif32@6.7.0
+board = esp32-s3-devkitc-1
+framework = arduino
+upload_speed = 1500000
+monitor_speed = 115200
+build_flags =
+    -DESP32S3
+    -DBOARD_HAS_PSRAM
+    -mfix-esp32-psram-cache-issue
+    -DCORE_DEBUG_LEVEL=5
+    -DARDUINO_USB_CDC_ON_BOOT=1
+    -DARDUINO_USB_MODE=1
+lib_deps =
+    M5Unified=https://github.com/m5stack/M5Unified
+              
+        
+          [env:m5stack-cores3]
+platform = espressif32@6.7.0
+board = esp32-s3-devkitc-1
+framework = arduino
+upload_speed = 1500000
+monitor_speed = 115200
+build_flags =
+    -DESP32S3
+    -DBOARD_HAS_PSRAM
+    -mfix-esp32-psram-cache-issue
+    -DCORE_DEBUG_LEVEL=5
+    -DARDUINO_USB_CDC_ON_BOOT=1
+    -DARDUINO_USB_MODE=1
+lib_deps =
+    M5Unified=https://github.com/m5stack/M5Unified
+          
+        
+      
+          
+        
+      
+
+## ESP-IDF
+
+- Espressif's Board Support Packages – CoreS3
+
+- CoreS3 ESP-IDF BSP Guide
+
+## Easyloader
+ | 
+| 
+ | Easyloader
+ | Download
+ | Note
+
+| 
+ | CoreS3 Factory Firmware Easyloader
+ | download
+ | /
+
+Flash CoreS3 factory firmware with Web Tools
+
+## Other
+
+- 
+CoreS3 Restore Factory Firmware Guide
+
+- 
+I2C Address Table
+
+ | 
+| 
+ | Chip
+ | Address
+
+| 
+ | AW88298
+ | 0x36
+
+| 
+ | AW9523
+ | 0x58
+
+| 
+ | AXP2101
+ | 0x34
+
+| 
+ | BM8563
+ | 0x51
+
+| 
+ | BMI270
+ | 0x69
+
+| 
+ | BMM150
+ | 0x10
+
+| 
+ | ES7210
+ | 0x40
+
+| 
+ | FT6336
+ | 0x38
+
+| 
+ | GC0308
+ | 0x21
+
+| 
+ | LTR553
+ | 0x23
+
+## Video
+
+  
+  
+  
+
+## Product Comparison
+ | 
+| 
+ | Hardware Peripheral
+ | CoreS3-Lite 
+ | CoreS3 
+ | CoreS3-SE 
+
+| 
+ | Camera (GC0308)
+ | ✅
+ | ✅
+ | ❌
+
+| 
+ | Proximity Sensor (LTR-553ALS-WA)
+ | ✅
+ | ✅
+ | ❌
+
+| 
+ | IMU (BMI270)
+ | ✅
+ | ✅
+ | ❌
+
+| 
+ | Compass (BMM150)
+ | ✅
+ | ✅
+ | ❌
+
+| 
+ | RTC
+ | ✅
+ | ✅
+ | ✅
+
+| 
+ | Microphone
+ | ✅
+ | ✅
+ | ✅
+
+| 
+ | Speaker
+ | ✅
+ | ✅
+ | ✅
+
+| 
+ | PMIC (AXP2101)
+ | ✅
+ | ✅
+ | ✅
+
+| 
+ | 16 MB Flash & 8 MB PSRAM
+ | ✅
+ | ✅
+ | ✅
+
+| 
+ | Touch
+ | ✅
+ | ✅
+ | ✅
+
+| 
+ | Back Cover
+ | Cover For CoreS3
+ | Base DIN
+ | ❌
+
+| 
+ | Battery Capacity
+ | 200 mAh
+ | 500 mAh
+ | ❌
+
+To compare information on the controller series products, you can visit the Product Selection Table, check the target products, and get the comparison results. The selection table covers key information such as core parameters and functional features, and supports comparison of multiple products simultaneously.

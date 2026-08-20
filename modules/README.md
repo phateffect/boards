@@ -9,8 +9,9 @@
 
 ## 已收录
 
-> 完整目录见 [`../index.md`](../index.md)。当前收录 3 个：
+> 完整目录见 [`../index.md`](../index.md)。当前收录 4 个：
 >
 > - [OV3660 Camera](ov3660-camera/README.md) — 器件事实源，被 [Timer Camera F](../boards/m5stack-timer-cameraf/README.md) 使用
 > - [M5Stack RoverC-Pro](m5stack-roverc-pro/README.md) — STM32F030 + 四轮麦克纳姆底盘，I2C/HAT
 > - [Osptek YDP420H003-V3](osptek-ydp420h003-v3/README.md) — 4.2" 300×400 黑白红反射式 TFT，ST7306/SPI
+> - [M5Stack Stack-chan Body](m5stack-stackchan-body/README.md) — Stack-chan 机器人本体（舵机×2/RGB×12/NFC/触摸/IR/电量计），被 [Stack-chan](../boards/m5stack-stackchan/README.md) 使用

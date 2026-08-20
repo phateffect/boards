@@ -13,7 +13,7 @@
 
 ## 已收录
 
-> 完整目录见 [`../index.md`](../index.md)。当前收录 8 块：
+> 完整目录见 [`../index.md`](../index.md)。当前收录 9 块：
 >
 > - [M5StickC Plus2](m5stack-stickc-plus2/README.md) — ESP32-PICO-V3-02（8MB Flash + 2MB PSRAM）
 > - [M5Stack StickS3](m5stack-sticks3/README.md) — ESP32-S3-PICO-1-N8R8，LCD / IMU / 音频 / 红外
@@ -23,3 +23,4 @@
 > - [Waveshare ESP32-S3-Matrix](waveshare-esp32-s3-matrix/README.md) — ESP32-S3
 > - [M5Stack Timer Camera F](m5stack-timer-cameraf/README.md) — ESP32 + OV3660（组合体）
 > - [ESP32-C3-OLED](esp32-c3-oled/README.md) — ESP32-C3 + 板载 Newvision 0.42" 72×40 OLED
+> - [M5Stack Stack-chan](m5stack-stackchan/README.md) — CoreS3（ESP32-S3，16MB/8MB）+ 机器人本体（舵机/NFC/触摸/IR，组合体）

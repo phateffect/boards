@@ -239,3 +239,18 @@
 - M5StickC Plus2 按官方背面丝印转录 8-pin HAT，其中 `G36/G25` 为同一物理位；Timer Camera F 转录 Ext.Port 左→右顺序。
 - StickS3、StopWatch 改为明确 LEFT/RIGHT 与奇偶 Pin 的双排 ASCII；RoverC-Pro 补车体接口相对位置。
 - Osptek 补 8-pin 转接板和 24-pin FPC 纯文本排布；OV3660 明确无通用 FPC 排布，并给出载板边界。
+
+## [2026-08-20] ingest | 新增 M5Stack Stack-chan（K151）与机器人本体模组
+
+- 新增 `boards/m5stack-stackchan/`：CoreS3 主控（ESP32-S3 双核 240MHz，16MB Flash/8MB Quad PSRAM）+ 机器人本体的桌面 AI 机器人；整机含 2.0" ILI9342C/FT6336U、GC0308、LTR-553、BMI270+BMM150、ES7210+AW88298、microSD、3×Grove（A=G1/G2 I2C、B=G8/G9、C=G17/G18 UART）；出厂固件为小智（XiaoZhi）AI Agent + Avatar + ESP-NOW 遥控 + OTA。
+- 新增模组页 `modules/m5stack-stackchan-body/`（§8 组合体拆分，本体为器件事实源）：SCS0009 反馈舵机×2（G6 TX/G7 RX，X 360°/Y 90°）、IR 收发（G5/G10）、12×WS2812C 与舵机电源经 PY32L020（0x6F/0x71，IO1=VM_EN、IO14=RGB）、NFC ST25R3916（0x50）、触摸 Si12T（0x68）、电量计 INA226（0x41）；本体器件挂 G11/G12——与 CoreS3 板内器件**共用内部 I2C**（据官方 CoreS3 M-Bus pin17/18 核实），全总线地址核对无冲突（CoreS3 板内 BMI270=0x69，与 Si12T 0x68 不撞）。
+- 新增 `examples/body_i2c_scan/`（PlatformIO，board=m5stack-cores3）：扫本体 I2C 总线并按预期地址表核对 0x41/0x50/0x68/0x6F 在位。
+- 归档官方资料至 `raw/`：StackChan 与 CoreS3 页面文本快照、本体 4 板 + CoreS3 共 5 份原理图 PDF、SCS0009/ST25R3916/Si12T/PY32L020/IRM56384/INA226 数据手册、外形尺寸图、整机照。
+- 更新 `index.md`、`boards/README.md`、`modules/README.md`（boards 9 / modules 4，交叉视图与组合体关系同步）。
+- 数据缺口（TODO，已标在页面）：CoreS3 独立页待建（快照/原理图已备）；组装后 Grove 口可达位置；CoreS3 内置电池与本体 550mAh 的关系；SCS0009 串口协议要点与 PY32L020 寄存器用法（手册已归档未译读）；本体 4 板叠层与线序。
+
+## [2026-08-20] update | Stack-chan 页补全摄像头 GC0308 DVP 接线
+
+- 复核已归档的 CoreS3 快照（`raw/datasheets/m5stack-cores3-doc.txt`），确认含完整 GC0308 PinMap，转录进 `boards/m5stack-stackchan/README.md` 新增小节「摄像头 GC0308 接线（CoreS3 板内）」。
+- 关键事实：SCCB=G11/G12（与本体器件共用的内部 I2C，地址 0x21）；PCLK=G45、VSYNC=G46、HREF=G38；D0–D7=G39/G40/G41/G42/G15/G16/G48/G47；**XCLK 与 PWDN 未接任何 GPIO**（官方标 -1）；复位经 IO 扩展 AW9523B 的 P1_0；GC0308 与 LTR-553 同一条排线。
+- 表 A 摄像头行由「见官方 CoreS3 PinMap」改为实际引脚；CoreS3 其余板内器件接线仍待 CoreS3 独立页。
